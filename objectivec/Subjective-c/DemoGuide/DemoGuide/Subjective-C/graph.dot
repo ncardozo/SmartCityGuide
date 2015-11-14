@@ -1,0 +1,55 @@
+digraph G { 
+  graph[rotate="90"]; 
+ graph[size ="10,20"]; 
+ French 
+English 
+Dutch 
+DbUpdate 
+LowMemory 
+LowBattery 
+SimpleInterface 
+TimeAdaptation 
+GPS 
+CategoryPoiOrder 
+ItineraryPoiOrder 
+PreferedPois 
+GuidedTour 
+RefreshPoiMap 
+ColoredCategories 
+Connected 
+ConnectedWifi 
+Connected3G 
+Morning 
+Afternoon 
+Evening 
+ ItineraryPoiOrder -> CategoryPoiOrder [color = "red"]; 
+ CategoryPoiOrder -> ItineraryPoiOrder [color = "red"]; 
+ French -> English [color = "red"]; 
+ English -> French [color = "red"]; 
+ French -> Dutch [color = "red"]; 
+ Dutch -> French [color = "red"]; 
+ English -> French [color = "red"]; 
+ French -> English [color = "red"]; 
+ English -> Dutch [color = "red"]; 
+ Dutch -> English [color = "red"]; 
+ Dutch -> French [color = "red"]; 
+ French -> Dutch [color = "red"]; 
+ Dutch -> English [color = "red"]; 
+ English -> Dutch [color = "red"]; 
+ Morning -> Afternoon [color = "red"]; 
+ Afternoon -> Morning [color = "red"]; 
+ Morning -> Evening [color = "red"]; 
+ Evening -> Morning [color = "red"]; 
+ Afternoon -> Morning [color = "red"]; 
+ Morning -> Afternoon [color = "red"]; 
+ Afternoon -> Evening [color = "red"]; 
+ Evening -> Afternoon [color = "red"]; 
+ Evening -> Afternoon [color = "red"]; 
+ Afternoon -> Evening [color = "red"]; 
+ Evening -> Morning [color = "red"]; 
+ Morning -> Evening [color = "red"]; 
+ ConnectedWifi -> Connected [color = "green"]; 
+ Connected3G -> Connected [color = "green"]; 
+ ItineraryPoiOrder -> GuidedTour [color = "violet"] ;
+} 
+ 
