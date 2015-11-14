@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2026FC71-51DB-4AD9-98C7-C4F694F5A43A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DemoGuide</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>135B7C402215AB6A16E4B3860BA6C852B972730A</key>
+		<string>https://github.com/ncardozo/SmartCityGuide.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>objectivec/Subjective-c/DemoGuide/DemoGuide.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>135B7C402215AB6A16E4B3860BA6C852B972730A</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ncardozo/SmartCityGuide.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>135B7C402215AB6A16E4B3860BA6C852B972730A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>135B7C402215AB6A16E4B3860BA6C852B972730A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SmartCityGuide</string>
+		</dict>
+	</array>
+</dict>
+</plist>
