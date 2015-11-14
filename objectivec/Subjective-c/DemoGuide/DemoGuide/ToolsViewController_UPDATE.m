@@ -38,48 +38,25 @@
 @contexts ConnectedWifi
 - (void)updateDataAction{
     self.updateAlert.message = @"Wifi connection available\n";
-    ^{
-[self  resendSelector:__SCOriginalSelector
-  withContextSelector:__SCContextSelector
-          returnValue:NULL];
-
-}();
+    @resend();
 }
 
 @contexts Connected3G
 - (void)updateDataAction{
-
     self.updateAlert.message = @"3G connection available\n";
-    ^{
-[self  resendSelector:__SCOriginalSelector
-  withContextSelector:__SCContextSelector
-          returnValue:NULL];
-
-}();
+    @resend();
 }
 
 @contexts LowMemory
 - (void)updateDataAction{
     self.updateAlert.message = [NSString stringWithFormat:@"%@------\n%@", self.updateAlert.message,
-                                @"Warning : the free memory on iphone device is limited.  The update is not recommended\n"];
-    ^{
-[self  resendSelector:__SCOriginalSelector
-  withContextSelector:__SCContextSelector
-          returnValue:NULL];
-
-}();
+    @resend();
 }
 
 @contexts LowBattery
 - (void)updateDataAction{
     self.updateAlert.message = [NSString stringWithFormat:@"%@------\n%@", self.updateAlert.message,
-                                @"Warning : the battery level of the iphone device is low.  The update is not recommended\n"];
-    ^{
-[self  resendSelector:__SCOriginalSelector
-  withContextSelector:__SCContextSelector
-          returnValue:NULL];
-
-}();
+    @resend();
 }
 
 @end    
