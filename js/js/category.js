@@ -30,7 +30,7 @@ function TCategory(iD, color, languages, newNames) {
 }
 
 function Category(iD, color, languages, names) {
-	return Object.create(Object.prototype, TCategory(iD, "black", languages, names));
+	return Object.create(Object.prototype, TCategory(iD, color, languages, names));
 }
 
 

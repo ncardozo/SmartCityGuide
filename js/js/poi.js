@@ -1,5 +1,6 @@
 var Trait = require("traits.js").Trait;
 var Schedule = require("./schedule.js");
+var Category = require("./category.js");
 
 var TPoiOperations = Trait({
 	getDescription: function() {
@@ -15,7 +16,7 @@ var TPoiOperations = Trait({
 		this.name.set(lang, nam);
 	},
 	addCategory: function(cat) {
-		this.categories[this.categories.length] = cat;
+		this.category = cat;
 	},
 	isClosed: function() {
 		return this.schedule.isInSchedule(new Date(Date.now()));
@@ -33,7 +34,7 @@ function TPoi(nid, add, currentLang, img, lat, long, cat, s) {
 			image: img,
 			latitude: lat,
 			longitude: long,
-			categories: [cat],
+			category: cat,
 			schedule: s,	
 		}));
 }

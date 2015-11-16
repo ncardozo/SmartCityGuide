@@ -1,5 +1,6 @@
 var Poi = require("./../poi.js");
 var Schedule = require("./../schedule.js");
+var Category = require("./../category.js");
 var test = require("unit.js");
 
 var n = "Place Sainte Barbe";
@@ -8,7 +9,7 @@ var desc = "La Place Sainte-Barbe est située au coeur du quartier scientifique 
 var lat = 50.668392;
 var longi = 4.621994;
 var img = {path: "barbe1.jpg", time:"day", desc: "Pour Josef, de la part des étudiants"};
-var cat = "SQUARE";
+var cat = Category(1, "orange", ["en", "fr"], ["SQUARE", "PLACE"]);
 var s = Schedule();
 
 function testPoiCreate() {
@@ -19,6 +20,8 @@ function testPoiCreate() {
 	test.assert.equal(lang, currentLang, 'Checking the creation of the current lang');
 	var name = p.getName();
 	test.assert.equal(name, n, 'Checking the name of the poi in fr');
+	var catName = p.category.getName(lang);
+	test.assert.equal("PLACE", catName, 'Checking the category of the POI in the current language - fr')
 }
 
 console.log("POI Creation");
