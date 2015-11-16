@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>schedule.js</string>
+	<string>guidedVisit.js</string>
 	<key>documents</key>
 	<array>
 		<dict>
@@ -13,7 +13,7 @@
 					<key>filename</key>
 					<string>tests/testPoi.js</string>
 					<key>lastUsed</key>
-					<date>2015-08-11T05:16:20Z</date>
+					<date>2015-11-16T17:31:31Z</date>
 				</dict>
 				<dict>
 					<key>filename</key>
@@ -31,7 +31,7 @@
 					<key>filename</key>
 					<string>tests/testTown.js</string>
 					<key>lastUsed</key>
-					<date>2015-07-21T16:46:25Z</date>
+					<date>2015-11-16T16:55:39Z</date>
 				</dict>
 			</array>
 			<key>expanded</key>
@@ -43,19 +43,21 @@
 			<key>filename</key>
 			<string>consoleInteraction.js</string>
 			<key>lastUsed</key>
-			<date>2015-07-22T08:48:12Z</date>
+			<date>2015-11-16T16:24:12Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>guidedVisit.js</string>
 			<key>lastUsed</key>
-			<date>2015-08-11T05:16:16Z</date>
+			<date>2015-11-16T18:14:55Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>poi.js</string>
 			<key>lastUsed</key>
-			<date>2015-07-29T08:01:56Z</date>
+			<date>2015-11-16T17:52:33Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -65,73 +67,107 @@
 		</dict>
 		<dict>
 			<key>filename</key>
+			<string>category.js</string>
+			<key>lastUsed</key>
+			<date>2015-11-16T17:42:14Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
 			<string>itinerary.js</string>
 			<key>lastUsed</key>
-			<date>2015-07-21T16:33:00Z</date>
+			<date>2015-11-16T18:14:55Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>schedule.js</string>
 			<key>lastUsed</key>
-			<date>2015-08-11T05:16:20Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2015-11-16T17:44:57Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>114</integer>
 	<key>metaData</key>
 	<dict>
+		<key>category.js</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>25</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
 		<key>guidedVisit.js</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>52</integer>
+				<integer>17</integer>
 				<key>line</key>
-				<integer>41</integer>
+				<integer>29</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>1</integer>
+			<integer>22</integer>
 		</dict>
 		<key>itinerary.js</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>14</integer>
+				<integer>1</integer>
 				<key>line</key>
-				<integer>31</integer>
+				<integer>32</integer>
 			</dict>
+			<key>columnSelection</key>
+			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
+			<key>selectFrom</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>19</integer>
+			</dict>
+			<key>selectTo</key>
+			<dict>
+				<key>column</key>
+				<integer>1</integer>
+				<key>line</key>
+				<integer>32</integer>
+			</dict>
 		</dict>
 		<key>poi.js</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>14</integer>
+				<integer>3</integer>
 				<key>line</key>
-				<integer>41</integer>
+				<integer>22</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>3</integer>
+			<integer>1</integer>
 		</dict>
 		<key>schedule.js</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>14</integer>
+				<integer>42</integer>
 				<key>line</key>
-				<integer>32</integer>
+				<integer>25</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
@@ -151,36 +187,6 @@
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>18</integer>
-		</dict>
-		<key>tests/testPoi.js</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>76</integer>
-				<key>line</key>
-				<integer>14</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>1</integer>
-				<key>line</key>
-				<integer>14</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>76</integer>
-				<key>line</key>
-				<integer>14</integer>
-			</dict>
 		</dict>
 		<key>tests/testSchedule.js</key>
 		<dict>
@@ -212,20 +218,6 @@
 				<integer>39</integer>
 			</dict>
 		</dict>
-		<key>tests/testTown.js</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>33</integer>
-				<key>line</key>
-				<integer>8</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
 		<key>town.js</key>
 		<dict>
 			<key>caret</key>
@@ -243,19 +235,16 @@
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>tests/testItinerary.js</string>
-		<string>itinerary.js</string>
-		<string>schedule.js</string>
-		<string>tests/testPoi.js</string>
-		<string>tests/testSchedule.js</string>
-		<string>town.js</string>
-		<string>tests/testTown.js</string>
-		<string>poi.js</string>
 		<string>guidedVisit.js</string>
+		<string>schedule.js</string>
+		<string>itinerary.js</string>
+		<string>category.js</string>
+		<string>poi.js</string>
+		<string>town.js</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{168, 0}, {940, 778}}</string>
+	<string>{{-2, 250}, {789, 778}}</string>
 </dict>
 </plist>
