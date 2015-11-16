@@ -17,7 +17,7 @@ var CategoryOperations = Trait({
 });
 
 function TCategory(iD, color, languages, newNames) {
-	var theNames = {};
+	var theNames = new Map();
 	for(i = 0; i < languages.length; i++) {
 		theNames[languages[i]] = newNames[i];
 	}

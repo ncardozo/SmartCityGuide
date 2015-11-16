@@ -18,6 +18,9 @@ var TPoiOperations = Trait({
 	addCategory: function(cat) {
 		this.category = cat;
 	},
+	setState: function(newState) {
+		this.state = newState;
+	},
 	isClosed: function() {
 		return this.schedule.isInSchedule(new Date(Date.now()));
 	}
@@ -29,6 +32,7 @@ function TPoi(nid, add, currentLang, img, lat, long, cat, s) {
 			id: nid,
 			name: new Map(), //language name map
 			address: add,
+			state: "Not visited",
 			description: new Map(), //language description map
 			language: currentLang, //current language
 			image: img,
