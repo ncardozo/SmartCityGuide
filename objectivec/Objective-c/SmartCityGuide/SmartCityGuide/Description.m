@@ -2,29 +2,58 @@
 //  Description.m
 //  MiniGuide
 //
-//  Created by Guillaume Kaisin on 23/10/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 17/11/15.
 //
 
 #import "Description.h"
 
-@implementation Description
-@synthesize descText, poidId, descId,language;
+@implementation DescriptionEN
+- (NSString *) description {
+    NSString *query = [NSString stringWithFormat:@"SELECT text FROM Description WITH language = %@ AND id_poi = %d", @"en", [self poidId]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
+}
+@end
 
--(id)initWithText:(NSMutableDictionary*)aDico ident:(int)anIdent poiId:(int) anId {
+@implementation DescriptionFR
+- (NSString *) description {
+    NSString *query = [NSString stringWithFormat:@"SELECT text FROM Description WITH language = %@ AND id_poi = %d", @"fr", [self poidId]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
+}
+@end
+
+
+@implementation DescriptionNL
+- (NSString *) description {
+    NSString *query = [NSString stringWithFormat:@"SELECT text FROM Description WITH language = %@ AND id_poi = %d", @"nl", [self poidId]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
+}
+@end
+
+
+@implementation Description
+@synthesize descText, poidId, descId;
+
+-(id)initWithText:(NSString *) aDico ident:(int)anIdent poiId:(int) anId {
     self = [super init];
     if (self) {
         // Initialization code here.
         self.descText = aDico;
         self.descId = anIdent;
         self.poidId = anId;
+        [self setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"EN"]) alloc] init]];
     }
     
     return self;
 }
 
 -(NSString*) description{
-    return @"description text context error";
+    return @"Error, no language selected to retrieve the description";
 }
 
+- (void) setStrategy:(id)_strategy {
+    self.strategy = _strategy;
+}
 @end

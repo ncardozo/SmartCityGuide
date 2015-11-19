@@ -2,26 +2,47 @@
 //  Description.h
 //  MiniGuide
 //
-//  Created by Guillaume Kaisin on 23/10/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 17/11/15.
 //
 
 #import <Foundation/Foundation.h>
+#import "DBManager.h"
 @class Poi;
 
-@interface Description : NSObject{
+@interface BaseDescription : NSObject {}
+
+@property(nonatomic) DBManager *dbManager;
+@property(nonatomic, assign) int descId;
+@property(assign, nonatomic) int poidId;
+
+-(NSString*) description;
+@end
+
+@interface DescriptionEN : BaseDescription {}
+-(NSString*) description;
+@end
+
+@interface DescriptionFR : BaseDescription {}
+-(NSString*) description;
+@end
+
+
+@interface DescriptionNL : BaseDescription {}
+-(NSString*) description;
+@end
+
+@interface Description : BaseDescription {
     int descId;
     int poidId;
-    NSString * language;
-    NSMutableDictionary * descText;
+    NSString * descText;
+    id strategy;
 }
 
-@property(assign, nonatomic) int descId;
-@property(assign, nonatomic) int poidId;
-@property(retain, nonatomic) NSString * language;
-@property(retain, nonatomic) NSMutableDictionary * descText;
+@property(retain, nonatomic) NSString *descText;
 
 -(id)initWithText:(NSMutableDictionary*)aDico ident:(int)anIdent poiId:(int) anId;
 -(NSString*) description;
+
+-(void) setStrategy: (id) _strategy;
 
 @end

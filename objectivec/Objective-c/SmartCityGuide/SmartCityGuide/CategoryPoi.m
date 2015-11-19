@@ -2,46 +2,66 @@
 //  CategoryPoi.m
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 14/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 17/11/15.
 //
 
 #import "CategoryPoi.h"
+#import "DBManager.h"
+
+@implementation CategoryPoiEN
+- (NSString *) name {
+    NSString *query = [NSString stringWithFormat:@"SELECT name FROM Category WITH language = %@ AND id = %@", @"en", [self idString]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
+}
+@end
+
+@implementation CategoryPoiFR
+- (NSString *) name {
+    NSString *query = [NSString stringWithFormat:@"SELECT name FROM Category WITH language = %@ AND id = %@", @"fr", [self idString]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
+}
+@end
+
+@implementation CategoryPoiNL
+- (NSString *) name {
+    NSString *query = [NSString stringWithFormat:@"SELECT name FROM Category WITH language = %@ AND id = %@", @"nl", [self idString]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
+}
+@end
 
 @implementation CategoryPoi
-@synthesize nameEn, nameFr, nameNl, idCat, idString, catColor;
+@synthesize name, idCat, idString, catColor;
 
-- (id)initWithId:(int)anId frName:(NSString*)frName enName:(NSString*)enName nlName:(NSString*)nlName {
+- (id)initWithId:(int)anId name:(NSString*) aName {
     self = [super init];
     if (self) {
         // Initialization code here.
-        self.nameFr = frName;
-        self.nameEn = enName;
-        self.nameNl = nlName;
+        self.name = aName;
         self.idCat = anId;
         self.idString = [NSString stringWithFormat:@"%d", anId];
+        self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"miniDB.sqlite"];
+        [self setStrategy:[[NSClassFromString([NSString stringWithFormat:@"CategoryPoi%@", @"EN"])alloc] init]];
         
-        if([self.nameFr compare:GREENCAT]==0){
-            self.catColor = [UIColor colorWithRed:0/255.0f green:184/255.0f blue:46/255.0f alpha:1];
-        } else if([self.nameFr compare:BLUECAT]==0){
-            self.catColor = [UIColor colorWithRed:184/255.0f green:138/255.0f blue:0.0f alpha:1];
-        } else if([self.nameFr compare:PINKCAT]==0){
-            self.catColor = [UIColor purpleColor];
-        } else{
             self.catColor = [UIColor colorWithRed:255/255.0f green:230/255.0f blue:102/255.0f alpha:1];
-        }
     }
     
     return self;
 }
 
--(UIColor*)categoryColor{
+- (UIColor *) categoryColor {
     return self.catColor;
 }
 
 
--(NSString*)name{
-    return @"Context_definition_error";
+- (NSString*) name {
+    return @"ERR-CategoryPoi-name";
+}
+
+- (void) setStrategy:(id)_strategy {
+    self.strategy = _strategy;
 }
 
 @end
