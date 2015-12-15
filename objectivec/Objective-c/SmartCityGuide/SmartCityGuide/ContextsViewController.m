@@ -44,8 +44,6 @@
     DemoGuideAppDelegate * appDelegate = (DemoGuideAppDelegate *)[[UIApplication sharedApplication] delegate];
     self.cacheManager = [appDelegate cacheManager];
     
-    [languages release];
-    
     [super viewDidLoad];
 }
 
@@ -88,20 +86,18 @@
     return [sectionNames count];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger) sectionPosition {
     // Return the number of rows in the section.
-    return [[self.contextNames objectAtIndex:section] count];
+    return [[self.contextNames objectAtIndex: sectionPosition] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     NSString * contextName = [[self.contextNames objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    SCContext * context = [[SCContextManager sharedContextManager]
-                           contextWithName:contextName];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
@@ -109,12 +105,11 @@
     cell.selectionStyle = UITableViewCellEditingStyleNone;
     
     UIImageView *imageView;
-    if(context.isActive){
+    if(cell.isSelected){
         imageView = [[UIImageView alloc] initWithImage:[[self.cacheManager imagesDico] objectForKey:@"accept"]];
     }
     else imageView = [[UIImageView alloc] initWithImage:[[self.cacheManager imagesDico] objectForKey:@"cancel"]];
     cell.accessoryView = imageView;
-    [imageView release];
     return cell;
 }
 

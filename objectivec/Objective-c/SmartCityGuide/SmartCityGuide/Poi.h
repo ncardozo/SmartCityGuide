@@ -94,5 +94,5 @@
 -(int) distanceBetween:(CLLocationCoordinate2D) otherPlace;
 -(BOOL) isClosed;
 
--(void) setStrategy: (id) _strategy;
++(void) setStrategy: (id) _strategy;
 @end

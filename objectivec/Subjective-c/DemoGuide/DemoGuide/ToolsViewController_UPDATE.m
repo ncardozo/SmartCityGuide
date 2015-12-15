@@ -32,7 +32,6 @@
 - (void)updateDataAction{
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Database update" message:@"No connection available to update !" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [alert show];
-    [alert release];
 }
 
 @contexts ConnectedWifi
@@ -49,13 +48,14 @@
 
 @contexts LowMemory
 - (void)updateDataAction{
-    self.updateAlert.message = [NSString stringWithFormat:@"%@------\n%@", self.updateAlert.message,
+    self.updateAlert.message = [NSString stringWithFormat:@"%@------\n%@", self.updateAlert.message, @"Warning : the free memory on iphone device is limited.  The update is not recommended\n"]
     @resend();
 }
 
 @contexts LowBattery
 - (void)updateDataAction{
     self.updateAlert.message = [NSString stringWithFormat:@"%@------\n%@", self.updateAlert.message,
+                                @"Warning : the battery level of the iphone device is low.  The update is not recommended\n"];
     @resend();
 }
 

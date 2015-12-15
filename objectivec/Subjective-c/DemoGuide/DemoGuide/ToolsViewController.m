@@ -135,7 +135,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    int section = indexPath.section;
+    long section = indexPath.section;
     NSString * sectionName = [self.toolsOption objectAtIndex:section];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -157,7 +157,6 @@
         [cell addSubview:timeAdaptation];
         cell.accessoryView = timeAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [timeAdaptation release];
     } else if(section==3 && cell.accessoryView==nil){//KID
         UISwitch * kidAdaptation = [[UISwitch alloc] initWithFrame:CGRectZero];
         [kidAdaptation addTarget:self action:@selector(SimpleInterfaceAdaptationToggled) forControlEvents: UIControlEventTouchUpInside];
@@ -165,7 +164,6 @@
         [cell addSubview:kidAdaptation];
         cell.accessoryView = kidAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [kidAdaptation release];
     } else if(section==4 && cell.accessoryView==nil){//MEMORY
         UISwitch * memoryAdaptation = [[UISwitch alloc] initWithFrame:CGRectZero];
         [memoryAdaptation addTarget:self action:@selector(MemoryAdaptationToggled) forControlEvents: UIControlEventTouchUpInside];
@@ -173,7 +171,6 @@
         [cell addSubview:memoryAdaptation];
         cell.accessoryView = memoryAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [memoryAdaptation release];
     } else if(section==5 && cell.accessoryView==nil){//BATTERY
         UISwitch * batteryAdaptation = [[UISwitch alloc] initWithFrame:CGRectZero];
         [batteryAdaptation addTarget:self action:@selector(BatteryAdaptationToggled) forControlEvents: UIControlEventTouchUpInside];
@@ -181,7 +178,6 @@
         [cell addSubview:batteryAdaptation];
         cell.accessoryView = batteryAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [batteryAdaptation release];
     } else if(section==6 && cell.accessoryView==nil){//COLORED ANNOTATIONS
         UISwitch * colorAdaptation = [[UISwitch alloc] initWithFrame:CGRectZero];
         [colorAdaptation addTarget:self action:@selector(ColorAdaptationToggled) forControlEvents: UIControlEventTouchUpInside];
@@ -189,7 +185,6 @@
         [cell addSubview:colorAdaptation];
         cell.accessoryView = colorAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [colorAdaptation release];
     } else if(section==7){
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.detailTextLabel.text = @"";
@@ -200,13 +195,12 @@
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    int section = indexPath.section;
+    long section = indexPath.section;
     
     if(section==0){//LANGUAGE
         if(self.langView == nil){
             ToolsLangViewController * viewController = [[ToolsLangViewController alloc] initWithNibName:@"ToolsLangViewController" bundle:nil];
             self.langView = viewController;
-            [viewController release];
         }
         self.langView.langList = [[self.appDelegate cacheManager] langageList];
         [self.navigationController pushViewController:self.langView animated:YES];
@@ -214,7 +208,6 @@
         if(self.catView == nil){
             ToolsCategoriesViewController * viewController = [[ToolsCategoriesViewController alloc] initWithNibName:@"ToolsCategoriesViewController" bundle:nil];
             self.catView = viewController;
-            [viewController release];
         }
         [self.navigationController pushViewController:self.catView animated:YES];
     } else if(section==7){

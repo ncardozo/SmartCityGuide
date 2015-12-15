@@ -43,7 +43,7 @@
         self.idCat = anId;
         self.idString = [NSString stringWithFormat:@"%d", anId];
         self.dbManager = [[DBManager alloc] initWithDatabaseFilename:@"miniDB.sqlite"];
-        [self setStrategy:[[NSClassFromString([NSString stringWithFormat:@"CategoryPoi%@", @"EN"])alloc] init]];
+        [CategoryPoi setStrategy:[[NSClassFromString([NSString stringWithFormat:@"CategoryPoi%@", @"EN"])alloc] init]];
         
             self.catColor = [UIColor colorWithRed:255/255.0f green:230/255.0f blue:102/255.0f alpha:1];
     }
@@ -60,7 +60,7 @@
     return @"ERR-CategoryPoi-name";
 }
 
-- (void) setStrategy:(id)_strategy {
++ (void) setStrategy:(id)_strategy {
     self.strategy = _strategy;
 }
 

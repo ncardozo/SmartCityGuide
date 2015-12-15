@@ -21,7 +21,7 @@
 }
 
 - (NSString *) descriptionString {
-    [[self description] setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"EN"]) alloc] init]];
+    [Description setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"EN"]) alloc] init]];
     return [[self description] description];
 }
 @end
@@ -40,7 +40,7 @@
 }
 
 - (NSString *) descriptionString {
-    [[self description] setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"FR"]) alloc] init]];
+    [Description setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"FR"]) alloc] init]];
     return [[self description] description];
 }
 @end
@@ -59,7 +59,7 @@
 }
 
 - (NSString *) descriptionString {
-    [[self description] setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"NL"]) alloc] init]];
+    [Description setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"NL"]) alloc] init]];
     return [[self description] description];
 }
 @end
@@ -150,7 +150,7 @@
     return result;
 }
 
--(void) setStrategy:(id)_strategy {
++ (void) setStrategy:(id)_strategy {
     self.strategy = _strategy;
 }
 

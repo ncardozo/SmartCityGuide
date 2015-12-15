@@ -55,6 +55,6 @@
 - (id)initWithId:(int)anId name:(NSString *) aName;
 - (NSString *) name;
 
--(void) setStrategy: (id) _strategy;
++(void) setStrategy: (id) _strategy;
 
 @end

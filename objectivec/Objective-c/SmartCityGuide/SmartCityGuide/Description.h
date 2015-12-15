@@ -43,6 +43,6 @@
 -(id)initWithText:(NSMutableDictionary*)aDico ident:(int)anIdent poiId:(int) anId;
 -(NSString*) description;
 
--(void) setStrategy: (id) _strategy;
++(void) setStrategy: (id) _strategy;
 
 @end

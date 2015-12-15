@@ -32,18 +32,18 @@
 @end
 
 @implementation Itinerary
-@synthesize itiId, itineraryPois, count, curPoiNb, descText;
+@synthesize itiId, itineraryPois, itineraryLenght, curPoiNb, descText;
 
 - (id)initWithId:(int)ide descriptions:(NSString *) descs nb:(int)len pois:(NSArray *)poisList {
     self = [super init];
     if (self) {
         // Initialization code here.
         self.itiId = itiId;
-        self.count = len;
+        self.itineraryLenght = len;
         self.itineraryPois = [NSArray arrayWithArray:poisList];
         self.descText = descs;
         self.curPoiNb = 0;
-        [self setStrategy:[[NSClassFromString([NSString stringWithFormat:@"Itinerary%@", @"EN"]) alloc] init]];
+        [Itinerary setStrategy:[[NSClassFromString([NSString stringWithFormat:@"Itinerary%@", @"EN"]) alloc] init]];
     }
     
     return self;
@@ -53,7 +53,7 @@
     return [NSString stringWithFormat:@"ERR_INIT-%@", self.descText];
 }
 
-- (void) setStrategy: (id) _strategy {
++ (void) setStrategy: (id) _strategy {
     self.strategy = _strategy;
 }
 

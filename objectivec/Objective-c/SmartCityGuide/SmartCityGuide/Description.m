@@ -43,7 +43,7 @@
         self.descText = aDico;
         self.descId = anIdent;
         self.poidId = anId;
-        [self setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"EN"]) alloc] init]];
+        [Description setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"EN"]) alloc] init]];
     }
     
     return self;
@@ -53,7 +53,7 @@
     return @"Error, no language selected to retrieve the description";
 }
 
-- (void) setStrategy:(id)_strategy {
++ (void) setStrategy:(id)_strategy {
     self.strategy = _strategy;
 }
 @end

@@ -38,13 +38,13 @@
     int curPoiNb;
 }
 
-@property (assign, nonatomic) int count;
+@property (assign, nonatomic) int itineraryLenght;
 @property (assign, nonatomic) int curPoiNb;
 @property (retain, nonatomic) NSArray * itineraryPois;
 
 
 - (id)initWithId:(int)ide descriptions:(NSDictionary*)descs nb:(int)len pois:(NSArray*)poisList;
 - (NSString*) description;
-- (void) setStrategy: (id) _strategy;
++ (void) setStrategy: (id) _strategy;
 
 @end
