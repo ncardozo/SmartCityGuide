@@ -2,8 +2,7 @@
 //  ToolsLangViewController.m
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 13/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 15/12/15.
 //
 
 #import "ToolsLangViewController.h"
@@ -82,7 +81,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
@@ -101,23 +100,20 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *newCell =[tableView cellForRowAtIndexPath:indexPath];
-    int newRow = [indexPath row];
-    int oldRow = [self.lastIndexPath row];
+    long newRow = [indexPath row];
     
-    if(newRow != oldRow){
-        //Modify the checkmark
-        newCell = [tableView  cellForRowAtIndexPath:indexPath];
-        newCell.accessoryType = UITableViewCellAccessoryCheckmark;
-        UITableViewCell *oldCell = [tableView cellForRowAtIndexPath: lastIndexPath]; 
-        oldCell.accessoryType = UITableViewCellAccessoryNone;
-        //Update the lastIndexPath
-        lastIndexPath = indexPath;
-        //Active language context
-        NSString * newLangContext = [[[self.appDelegate contextManager] langContexts] objectAtIndex:newRow];
-        NSString * oldLangContext = [[[self.appDelegate contextManager] langContexts] objectAtIndex:oldRow];
-        [[SCContextManager sharedContextManager] deactivateContextWithName:oldLangContext];
-        [[SCContextManager sharedContextManager] activateContextWithName:newLangContext];
-    }
+    //Modify the checkmark
+    newCell = [tableView  cellForRowAtIndexPath:indexPath];
+    newCell.accessoryType = UITableViewCellAccessoryCheckmark;
+    UITableViewCell *oldCell = [tableView cellForRowAtIndexPath: lastIndexPath];
+    oldCell.accessoryType = UITableViewCellAccessoryNone;
+    //Update the lastIndexPath
+    lastIndexPath = indexPath;
+    //Active language
+    NSString * newLangContext = [[[self.appDelegate contextManager] langContexts] objectAtIndex:newRow];
+    [Description setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", newLangContext]) alloc] init]];
+    [CategoryPoi setStrategy: [[NSClassFromString([NSString stringWithFormat:@"CategoryPoi%@", newLangContext]) alloc] init]];
+    [Itinerary setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Itinerary%@", newLangContext]) alloc] init]];
     //Deselect and pop the current view
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController popViewControllerAnimated:YES];

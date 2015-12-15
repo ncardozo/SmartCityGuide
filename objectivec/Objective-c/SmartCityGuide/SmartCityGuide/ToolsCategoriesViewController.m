@@ -2,11 +2,32 @@
 //  ToolsCategoriesViewController.m
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 04/03/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 15/12/15.
 //
 
 #import "ToolsCategoriesViewController.h"
+
+@implementation ToolsCategoriesViewControllerColor
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CategoryPoi * category = [[[self.appDelegate cacheManager] categoryList] objectAtIndex:indexPath.row];
+    NSString * catTitle = [category name];
+    
+    static NSString *CellIdentifier = @"Cell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    // Configure the cell...
+    cell.textLabel.text = catTitle;
+    cell.textLabel.textColor = category.catColor;
+    if([[self.selectedCategories objectAtIndex:indexPath.row] boolValue]) cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    return cell;
+}
+@end
 
 @implementation ToolsCategoriesViewController
 @synthesize appDelegate, selectedCategories;
@@ -32,7 +53,7 @@
     self.appDelegate = (DemoGuideAppDelegate *)[[UIApplication sharedApplication] delegate];
 
     self.selectedCategories = [[NSMutableArray alloc] init];
-    int max = [[[self.appDelegate cacheManager] categoryList] count];
+    long max = [[[self.appDelegate cacheManager] categoryList] count];
     for(NSInteger i=0; i<max;i++){
         [self.selectedCategories addObject:[NSNumber numberWithBool:YES]];
     }
@@ -92,7 +113,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
@@ -110,7 +131,7 @@
         if([[self.selectedCategories objectAtIndex:i] boolValue]) nbSelectedCat++;
     }
     
-    int selectedRow = indexPath.row;
+    long selectedRow = indexPath.row;
     UITableViewCell *cell =[tableView cellForRowAtIndexPath:indexPath];
     if([[self.selectedCategories objectAtIndex:selectedRow] boolValue] && nbSelectedCat!=1) {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -123,4 +144,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
++ (void) setStrategy:(id)_strategy {
+    self.strategy = _strategy;
+}
 @end

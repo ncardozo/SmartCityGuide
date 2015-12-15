@@ -2,8 +2,7 @@
 //  ToolsLangViewController.h
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 13/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 15/12/15.
 //
 
 #import <UIKit/UIKit.h>

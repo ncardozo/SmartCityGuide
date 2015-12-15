@@ -1,11 +1,52 @@
 //  ToolsViewController.m
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 13/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 15/12/15.
 //
 
 #import "ToolsViewController.h"
+
+@implementation BaseToolsViewController
+- (void) updateDataAction {
+    [self.updateAlert showAlert];
+}
+@end
+
+@implementation ToolsViewControllerDisconnected
+- (void) updateDataAction {
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Database update" message:@"No connection available to update !" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
+}
+@end
+
+@implementation ToolsViewControllerWifi
+- (void)updateDataAction{
+    self.updateAlert.message = @"Wifi connection available\n";
+    [super updateAlert];
+}
+@end
+
+@implementation ToolsViewController3G
+- (void)updateDataAction{
+    self.updateAlert.message = @"3G connection available\n";
+    [super updateAlert];
+}
+@end
+
+@implementation ToolsViewControllerLowMemory
+- (void)updateDataAction{
+    self.updateAlert.message = [NSString stringWithFormat:@"%@------\n%@", self.updateAlert.message, @"Warning : the free memory on iphone device is limited.  The update is not recommended\n"];
+    [super updateAlert];
+}
+@end
+
+@implementation ToolsViewControllerLowBattery
+- (void)updateDataAction{
+    self.updateAlert.message = [NSString stringWithFormat:@"%@------\n%@", self.updateAlert.message, @"Warning : the battery level of the iphone device is low.  The update is not recommended\n"];
+    [super updateAlert];
+}
+@end
+
 
 @implementation ToolsViewController
 @synthesize toolsOption, appDelegate;
@@ -24,6 +65,10 @@
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
+}
+
++(void) setStrategy:(id)_strategy {
+    self.strategy = _strategy;
 }
 
 #pragma mark - View lifecycle
@@ -52,7 +97,8 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-    [[SCContextManager sharedContextManager] activateContextWithName:@"RefreshPoiMap"];
+    
+    //[[SCContextManager sharedContextManager] activateContextWithName:@"RefreshPoiMap"];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -73,52 +119,24 @@
 }
 
 -(void) timeAdaptationToggled{
-    SCContext * context = [[SCContextManager sharedContextManager]
-                           contextWithName:@"TimeAdaptation"];
-    if(context.isActive) {
-        [[SCContextManager sharedContextManager] deactivateContextWithName:@"TimeAdaptation"];
-    } else [[SCContextManager sharedContextManager] activateContextWithName:@"TimeAdaptation"];
+    NSString * context = @"TimeAdaptation";
 }
 
 -(void) SimpleInterfaceAdaptationToggled{
-    SCContext * context = [[SCContextManager sharedContextManager]
-                           contextWithName:@"SimpleInterface"];
-    if(context.isActive) {
-        [[SCContextManager sharedContextManager] deactivateContextWithName:@"SimpleInterface"];
-    } else {
-        [[SCContextManager sharedContextManager] activateContextWithName:@"SimpleInterface"];
-    }
+    NSString * context = @"SimpleInterface";
 }
 
 -(void) MemoryAdaptationToggled{
-    SCContext * context = [[SCContextManager sharedContextManager]
-                           contextWithName:@"LowMemory"];
-    if(context.isActive) {
-        [[SCContextManager sharedContextManager] deactivateContextWithName:@"LowMemory"];
-    } else {
-        [[SCContextManager sharedContextManager] activateContextWithName:@"LowMemory"];
-    }
+    NSString * context = @"LowMemory";
 }
 
 -(void) BatteryAdaptationToggled{
-    SCContext * context = [[SCContextManager sharedContextManager]
-                           contextWithName:@"LowBattery"];
-    if(context.isActive) {
-        [[SCContextManager sharedContextManager] deactivateContextWithName:@"LowBattery"];
-    } else {
-        [[SCContextManager sharedContextManager] activateContextWithName:@"LowBattery"];
-    }
+    NSString * context = @"LowBattery";
 }
 
 -(void) ColorAdaptationToggled{
-    SCContext * context = [[SCContextManager sharedContextManager]
-                           contextWithName:@"ColoredCategories"];
-    if(context.isActive) {
-        [[SCContextManager sharedContextManager] deactivateContextWithName:@"ColoredCategories"];
-    } else {
-        [[SCContextManager sharedContextManager] activateContextWithName:@"ColoredCategories"];
-        [[SCContextManager sharedContextManager] activateContextWithName:@"RefreshPoiMap"];
-    }
+    NSString * context = @"ColoredCategories";
+    [ToolsCategoriesViewController setStrategy: [[NSClassFromString([NSString stringWithFormat:@"ToolsCategoriesViewController%@", context])alloc] init]];
 }
 
 
@@ -135,12 +153,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
-    int section = indexPath.section;
+    long section = indexPath.section;
     NSString * sectionName = [self.toolsOption objectAtIndex:section];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
@@ -157,7 +175,6 @@
         [cell addSubview:timeAdaptation];
         cell.accessoryView = timeAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [timeAdaptation release];
     } else if(section==3 && cell.accessoryView==nil){//KID
         UISwitch * kidAdaptation = [[UISwitch alloc] initWithFrame:CGRectZero];
         [kidAdaptation addTarget:self action:@selector(SimpleInterfaceAdaptationToggled) forControlEvents: UIControlEventTouchUpInside];
@@ -165,7 +182,6 @@
         [cell addSubview:kidAdaptation];
         cell.accessoryView = kidAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [kidAdaptation release];
     } else if(section==4 && cell.accessoryView==nil){//MEMORY
         UISwitch * memoryAdaptation = [[UISwitch alloc] initWithFrame:CGRectZero];
         [memoryAdaptation addTarget:self action:@selector(MemoryAdaptationToggled) forControlEvents: UIControlEventTouchUpInside];
@@ -173,7 +189,6 @@
         [cell addSubview:memoryAdaptation];
         cell.accessoryView = memoryAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [memoryAdaptation release];
     } else if(section==5 && cell.accessoryView==nil){//BATTERY
         UISwitch * batteryAdaptation = [[UISwitch alloc] initWithFrame:CGRectZero];
         [batteryAdaptation addTarget:self action:@selector(BatteryAdaptationToggled) forControlEvents: UIControlEventTouchUpInside];
@@ -181,7 +196,6 @@
         [cell addSubview:batteryAdaptation];
         cell.accessoryView = batteryAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [batteryAdaptation release];
     } else if(section==6 && cell.accessoryView==nil){//COLORED ANNOTATIONS
         UISwitch * colorAdaptation = [[UISwitch alloc] initWithFrame:CGRectZero];
         [colorAdaptation addTarget:self action:@selector(ColorAdaptationToggled) forControlEvents: UIControlEventTouchUpInside];
@@ -189,7 +203,6 @@
         [cell addSubview:colorAdaptation];
         cell.accessoryView = colorAdaptation;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [colorAdaptation release];
     } else if(section==7){
         cell.accessoryType = UITableViewCellAccessoryNone;
         cell.detailTextLabel.text = @"";
@@ -200,13 +213,12 @@
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    int section = indexPath.section;
+    long section = indexPath.section;
     
     if(section==0){//LANGUAGE
         if(self.langView == nil){
             ToolsLangViewController * viewController = [[ToolsLangViewController alloc] initWithNibName:@"ToolsLangViewController" bundle:nil];
             self.langView = viewController;
-            [viewController release];
         }
         self.langView.langList = [[self.appDelegate cacheManager] langageList];
         [self.navigationController pushViewController:self.langView animated:YES];
@@ -214,7 +226,6 @@
         if(self.catView == nil){
             ToolsCategoriesViewController * viewController = [[ToolsCategoriesViewController alloc] initWithNibName:@"ToolsCategoriesViewController" bundle:nil];
             self.catView = viewController;
-            [viewController release];
         }
         [self.navigationController pushViewController:self.catView animated:YES];
     } else if(section==7){

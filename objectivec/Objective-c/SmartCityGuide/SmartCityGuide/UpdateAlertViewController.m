@@ -2,8 +2,7 @@
 //  UpdateAlertViewController.m
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 06/05/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 15/12/15.
 //
 
 #import "UpdateAlertViewController.h"
