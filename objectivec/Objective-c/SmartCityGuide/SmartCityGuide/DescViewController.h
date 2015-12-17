@@ -2,24 +2,16 @@
 //  DescViewController.h
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 13/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 15/12/15.
 //
 
 #import <UIKit/UIKit.h>
 #import "Poi.h"
 #import "Description.h"
 
-@interface DescViewController : UIViewController{
-    IBOutlet UIScrollView *scrollView;
-    IBOutlet UILabel *titleLabel;
-    IBOutlet UILabel *subtitleLabel;
-    IBOutlet UIImageView *imagePoi;
-    IBOutlet UILabel *addressPoi;
-    IBOutlet UILabel *descText;
-    IBOutlet UILabel *backgroundLabel;
+@interface BaseDescViewController : UIViewController {
+    
 }
-
 @property (retain, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (retain, nonatomic) IBOutlet UILabel *titleLabel;
 @property (retain, nonatomic) IBOutlet UILabel *subtitleLabel;
@@ -28,6 +20,27 @@
 @property (retain, nonatomic) IBOutlet UILabel *descText;
 @property (retain, nonatomic) IBOutlet UILabel *backgroundLabel;
 
--(void) setupView:(Poi*)curPoi;
+-(void) setupView:(Poi*) curPoi;
+
+@end
+
+@interface DescViewControllerColor : BaseDescViewController
+- (void) setupView:(Poi*) curPoi;
+@end
+
+@interface DescViewController : BaseDescViewController {
+    IBOutlet UIScrollView *scrollView;
+    IBOutlet UILabel *titleLabel;
+    IBOutlet UILabel *subtitleLabel;
+    IBOutlet UIImageView *imagePoi;
+    IBOutlet UILabel *addressPoi;
+    IBOutlet UILabel *descText;
+    IBOutlet UILabel *backgroundLabel;
+    
+    id strategy;
+}
+
+-(void) setupView:(Poi*) curPoi;
++(void) setStrategy: (id) _strategy;
 
 @end

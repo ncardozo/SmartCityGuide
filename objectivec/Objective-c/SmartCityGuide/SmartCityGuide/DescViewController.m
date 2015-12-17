@@ -2,11 +2,33 @@
 //  DescViewController.m
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 13/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 17/11/15.
 //
 
 #import "DescViewController.h"
+
+@implementation BaseDescViewController
+- (void)setupView:(Poi*) curPoi {
+    self.titleLabel.text = [curPoi name];
+    self.subtitleLabel.text = [curPoi category];
+    self.descText.text = [curPoi descriptionString];
+    [self.descText sizeToFit];
+    self.imagePoi.image = [curPoi image];
+    self.addressPoi.text = [NSString stringWithFormat:@"%@\n%@",[curPoi address], @"1348 Louvain La Neuve"];
+    self.addressPoi.backgroundColor = [UIColor grayColor];
+    int textheight = self.descText.frame.size.height;
+    [self.scrollView setContentSize:CGSizeMake(320, 290+textheight)];
+    [self.scrollView setScrollEnabled:YES];
+}
+@end
+
+@implementation DescViewControllerColor
+- (void)setupView:(Poi*) curPoi {
+    self.backgroundLabel.backgroundColor = [[curPoi categoryPoi] catColor];
+    self.addressPoi.backgroundColor = [[curPoi categoryPoi] catColor];
+    [super setupView: curPoi];
+}
+@end
 
 @implementation DescViewController
 @synthesize titleLabel, subtitleLabel, imagePoi, addressPoi, descText, scrollView, backgroundLabel;
@@ -27,16 +49,9 @@
 }
 
 -(void) setupView:(Poi*)curPoi {    
-    self.titleLabel.text = [curPoi name];
-    self.subtitleLabel.text = [curPoi category];
-    self.descText.text = [curPoi descriptionString];
-    [self.descText sizeToFit];
-    self.imagePoi.image = [curPoi image];
-    self.addressPoi.text = [NSString stringWithFormat:@"%@\n%@",[curPoi address], @"1348 Louvain La Neuve"];
+    self.backgroundLabel.backgroundColor = [UIColor grayColor];
     self.addressPoi.backgroundColor = [UIColor grayColor];
-    int textheight = self.descText.frame.size.height;
-    [self.scrollView setContentSize:CGSizeMake(320, 290+textheight)];
-    [self.scrollView setScrollEnabled:YES];
+    [super setupView: curPoi];
 }
 
 #pragma mark - View lifecycle
@@ -46,19 +61,12 @@
 }
 
 - (void)viewDidUnload {
-    [titleLabel release];
     titleLabel = nil;
-    [subtitleLabel release];
     subtitleLabel = nil;
-    [imagePoi release];
     imagePoi = nil;
-    [addressPoi release];
     addressPoi = nil;
-    [descText release];
     descText = nil;
-    [scrollView release];
     scrollView = nil;
-    [backgroundLabel release];
     backgroundLabel = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -70,15 +78,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [titleLabel release];
-    [subtitleLabel release];
-    [imagePoi release];
-    [addressPoi release];
-    [descText release];
-    [scrollView release];
-    [backgroundLabel release];
-    [super dealloc];
++ (void) setStrategy:(id)_strategy {
+    self.strategy = _strategy;
 }
-
 @end
