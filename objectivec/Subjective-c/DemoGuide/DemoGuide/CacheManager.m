@@ -52,13 +52,6 @@
     return self;
 }
 
--(void)dealloc{
-    [sqlManager release];
-    [preferedPois release];
-    [imagesDico release];
-    [super dealloc];
-}
-
 -(void) updateItineraries{
     self.itineraryList = [self.sqlManager selectItineraries:self.poiById];
 }

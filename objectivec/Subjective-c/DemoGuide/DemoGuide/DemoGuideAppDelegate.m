@@ -62,14 +62,6 @@
      */
 }
 
-- (void)dealloc {
-    [cacheManager release];
-    [contextManager release];
-    [_window release];
-    [_tabBarController release];
-    [super dealloc];
-}
-
 - (void)copyDatabaseIfNeeded:(BOOL)needUpdate {
 	
 	//Using NSFileManager we can perform many file system operations.
