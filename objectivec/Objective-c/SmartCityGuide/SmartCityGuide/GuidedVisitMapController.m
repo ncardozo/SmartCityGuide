@@ -7,10 +7,156 @@
 
 #import "GuidedVisitMapController.h"
 
+@implementation BaseGuidedVisitMapController
+@synthesize mapView, mapContainerView, scrollView;
+@synthesize itiList, currentPoi, currentIti, itiDescLabel, countLabel;
+@synthesize annotations;
+@synthesize cacheManager;
+
+
+- (void) cancelItinerary{
+    self.navigationController.toolbarHidden=YES;
+    [self hideItineraryChoice:NO];
+    [GuidedVisitMapController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"BaseGuidedVisitMapController"])alloc] init]];
+    self.currentPoi = 0;
+    self.cacheManager.activeItinerary.curPoiNb = 0;
+    [self setItinerary];
+    self.title=@"Choose itinerary";
+}
+
+- (void) hideItineraryChoice:(BOOL)hide{
+    int modify;
+    if(hide) modify=120;
+    else modify=-120;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1.0];
+    [self.view bringSubviewToFront:self.mapContainerView];
+    self.mapView.frame =  CGRectMake(self.mapView.frame.origin.x,
+                                     self.mapView.frame.origin.y,
+                                     self.mapView.frame.size.width,
+                                     self.mapView.frame.size.height+modify);
+    self.mapContainerView.frame = CGRectMake(self.mapContainerView.frame.origin.x,
+                                             self.mapContainerView.frame.origin.y,
+                                             self.mapContainerView.frame.size.width,
+                                             self.mapContainerView.frame.size.height+modify);
+    [UIView commitAnimations];
+}
+
+- (void) setItinerary{
+    Itinerary * curIti = [[self.cacheManager itineraryList] objectAtIndex:currentIti];
+    //Set the itinerary text
+    self.itiDescLabel.text = [curIti description];
+    [self.itiDescLabel sizeToFit];
+    int textheight = self.itiDescLabel.frame.size.height;
+    [self.scrollView setContentSize:CGSizeMake(160, 26+textheight)];
+    [self.scrollView setScrollEnabled:YES];
+    //Set the annotations
+    [self.mapView removeAnnotations:self.annotations];
+    [self addPoiAnnotations];
+    //Set count button
+    self.countLabel.text=[NSString stringWithFormat:@"%d/%lul", self.currentIti+1, (unsigned long)[[self.cacheManager itineraryList] count]];
+}
+
+- (void)nextPoi{
+    Itinerary * curIti = [itiList objectAtIndex:currentIti];
+    NSArray * itiPois = [curIti itineraryPois];
+    
+    if(currentPoi == [itiPois count]){
+        [self cancelItinerary];
+    } else {
+        currentPoi += 1;
+        self.cacheManager.activeItinerary.curPoiNb += 1;
+        [self refreshAnnotations];
+    }
+}
+
+- (void) addPoiAnnotations{
+    Itinerary * curIti = [self.itiList objectAtIndex:self.currentIti];
+    NSArray * poisList = [curIti itineraryPois];
+    self.annotations = [[NSMutableArray alloc] init];
+    int i=0;
+    while(i<[poisList count]){
+        Poi * curP = [poisList objectAtIndex:i];
+        MKAnnotation *annotationPoint = [[MKAnnotation alloc] initWithPoi:curP index:i];
+        [self.mapView addAnnotation:annotationPoint];
+        [self.annotations addObject:annotationPoint];
+        i++;
+    }
+}
+
+-(void)refreshAnnotations{
+    [self.mapView removeAnnotations:self.annotations];
+    [self addPoiAnnotations];
+}
+
+@end
+
+@implementation GuidedVisitMapControllerGuidedTour
+
+- (void)checkNearestPoi{
+    CLLocation * currentLocation = mapView.userLocation.location;
+    Poi * nearestPoi = nil;
+    int nearestDist = 0;
+    for(Poi * p in [[itiList objectAtIndex:currentIti] itineraryPois]){
+        if(nearestPoi==nil){
+            nearestPoi = p;
+            nearestDist = [p distanceBetween:currentLocation.coordinate];
+        } else {
+            int curDist = [p distanceBetween:currentLocation.coordinate];
+            if(curDist<nearestDist){
+                nearestPoi=p;
+                nearestDist=curDist;
+            }
+        }
+    }
+    int indexPoi = nearestPoi.poiId;
+    if(indexPoi == self.currentPoi){
+        [self nextPoi];
+    }
+}
+
+- (MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
+    if([annotation isKindOfClass:[MKUserLocation class]]){
+        return nil;
+    } else {
+        MKAnnotation * myAnnotation = (MKAnnotation*)annotation;
+        static NSString * AnnotationIdentifier = @"AnnotationIdentifier";
+        MKAnnotationView *pinView=[self.mapView dequeueReusableAnnotationViewWithIdentifier:AnnotationIdentifier];
+        //If one isn't available, create a new one
+        if(!pinView){
+            pinView=[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
+        }
+        
+        int indexPoi = myAnnotation.indexIti+1;
+        
+        //Basic properties
+        //pinView.animatesDrop = YES;
+        pinView.canShowCallout = YES;
+        //pinView.pinColor = MKPinAnnotationColorGreen;
+        NSString * imgUrl;
+        if(indexPoi == self.currentPoi){
+            imgUrl = [NSString stringWithFormat:@"number%d", indexPoi];
+        } else {
+            imgUrl = [NSString stringWithFormat:@"number%d_grey", indexPoi];
+        }
+        pinView.image = [[self.cacheManager imagesDico] objectForKey:imgUrl];
+        
+        UIButton * righButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        righButton.tag = [[myAnnotation poi] poiId];
+        [righButton setTitle:[myAnnotation.poi name] forState:UIControlStateNormal];
+        pinView.rightCalloutAccessoryView = righButton;
+        
+        return pinView;
+    }
+}
+
+@end
+
+
 @implementation GuidedVisitMapController
-@synthesize countLabel;
-@synthesize mapContainerView, scrollView, previousButton, goButton, nextButton, itiDescLabel, mapView;
-@synthesize descView, currentIti, cacheManager, annotations, itiList, currentPoi;
+@synthesize previousButton, goButton, nextButton;
+@synthesize descView;
+@synthesize strategy;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -18,7 +164,6 @@
         // Custom initialization
         DescViewController * viewController = [[DescViewController alloc] initWithNibName:@"DescViewController" bundle:nil];
         self.descView = viewController;
-        [viewController release];
         [self.descView viewDidLoad];
         self.currentIti = 0;
         self.currentPoi = 0;
@@ -56,9 +201,8 @@
                                 action:@selector(recenterMap)];
     
     self.navigationItem.rightBarButtonItem = comment;
-    [comment release];
     
-    self.mapView = [[[MKMapView alloc] initWithFrame:self.mapContainerView.frame] autorelease];
+    self.mapView = [[MKMapView alloc] initWithFrame:self.mapContainerView.frame];
     self.mapView.delegate = self;
     self.mapView.showsUserLocation = YES;
     [self.mapContainerView addSubview:self.mapView];
@@ -101,17 +245,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc {
-    [mapContainerView release];
-    [scrollView release];
-    [previousButton release];
-    [goButton release];
-    [nextButton release];
-    [itiDescLabel release];
-    [countLabel release];
-    [super dealloc];
-}
-
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     if([annotation isKindOfClass:[MKUserLocation class]]){
         return nil;
@@ -141,7 +274,7 @@
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
-    NSString * poiId = [NSString stringWithFormat:@"%d",control.tag];
+    NSString * poiId = [NSString stringWithFormat:@"%ld",(long)control.tag];
     Poi * p = [[self.cacheManager poiById] objectForKey:poiId];
     
     [self.navigationController pushViewController:self.descView animated:YES];       
@@ -150,7 +283,6 @@
 }
 
 - (void)recenterMap {
-    
     NSArray *coordinates = [self.mapView valueForKeyPath:@"annotations.coordinate"];
     
     CLLocationCoordinate2D maxCoord = {-90.0f, -180.0f};
@@ -181,16 +313,14 @@
 }
 
 - (IBAction)goAction:(id)sender {
-    SCContext * gpsContext = [[SCContextManager sharedContextManager]
-                           contextWithName:@"GPS"];
-    if(!gpsContext.isActive){
+    if([GuidedVisitMapController getStrategy] != [[NSClassFromString([NSString stringWithFormat:@"GuidedVisitMapController%@", @"GuidedTour"])alloc] init]){
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Guided Tour" message:@"GPS is disabled on this device.  The Guided tour will not take into account your localization.  Click on \"next\" button to progress into the itinerary" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
-        [alert release];
     }
     
     self.title = @"Guided Tour";
-    [[SCContextManager sharedContextManager] activateContextWithName:@"GuidedTour"];
+    [GuidedVisitMapController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"GuidedVisitMapController%@", @"GuidedTour"])alloc] init]];
+
     self.navigationController.toolbarHidden=NO;
     [self hideItineraryChoice:YES];
     self.currentPoi = 1;
@@ -223,89 +353,16 @@
     self.itiList = [self.cacheManager itineraryList];
 }
 
-- (void) addPoiAnnotations{
-    Itinerary * curIti = [self.itiList objectAtIndex:self.currentIti];
-    NSArray * poisList = [curIti itineraryPois];
-    self.annotations = [[NSMutableArray alloc] init];
-    int i=0;
-    while(i<[poisList count]){
-        Poi * curP = [poisList objectAtIndex:i];      
-        MKAnnotation *annotationPoint = [[MKAnnotation alloc] initWithPoi:curP index:i];
-        [self.mapView addAnnotation:annotationPoint];
-        [self.annotations addObject:annotationPoint];
-        i++;
-    }
-}
-
 -(void)viewWillAppear:(BOOL)animated{
     [self setItinerary];
     [super viewWillAppear:animated];
-}
-
-- (void) setItinerary{
-    Itinerary * curIti = [[self.cacheManager itineraryList] objectAtIndex:currentIti];
-    //Set the itinerary text
-    self.itiDescLabel.text = [curIti description];
-    [self.itiDescLabel sizeToFit];
-    int textheight = self.itiDescLabel.frame.size.height;
-    [self.scrollView setContentSize:CGSizeMake(160, 26+textheight)];
-    [self.scrollView setScrollEnabled:YES];
-    //Set the annotations
-    [self.mapView removeAnnotations:self.annotations];
-    [self addPoiAnnotations];
-    //Set count button
-    self.countLabel.text=[NSString stringWithFormat:@"%d/%d", self.currentIti+1, [[self.cacheManager itineraryList] count]];
-}
-
-- (void) hideItineraryChoice:(BOOL)hide{
-    int modify;
-    if(hide) modify=120;
-    else modify=-120;
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:1.0];
-    [self.view bringSubviewToFront:self.mapContainerView];
-    self.mapView.frame =  CGRectMake(self.mapView.frame.origin.x,
-                                     self.mapView.frame.origin.y,
-                                     self.mapView.frame.size.width,
-                                     self.mapView.frame.size.height+modify);
-    self.mapContainerView.frame = CGRectMake(self.mapContainerView.frame.origin.x,
-                                             self.mapContainerView.frame.origin.y,
-                                             self.mapContainerView.frame.size.width,
-                                             self.mapContainerView.frame.size.height+modify);
-    [UIView commitAnimations];
-}
-
--(void)refreshAnnotations{
-    [self.mapView removeAnnotations:self.annotations];
-    [self addPoiAnnotations];
-}
-
-- (void)nextPoi{
-    Itinerary * curIti = [itiList objectAtIndex:currentIti]; 
-    NSArray * itiPois = [curIti itineraryPois];
-    Poi * curPoi = [itiPois objectAtIndex:currentPoi-1];
-    
-    if(currentPoi == [itiPois count]){
-        [self cancelItinerary];
-    } else {
-        currentPoi += 1;
-        self.cacheManager.activeItinerary.curPoiNb += 1;
-        [self refreshAnnotations];
-    }
-}
-
-- (void) cancelItinerary{
-    self.navigationController.toolbarHidden=YES;
-    [self hideItineraryChoice:NO];
-    [[SCContextManager sharedContextManager] deactivateContextWithName:@"GuidedTour"];
-    self.currentPoi = 0;
-    self.cacheManager.activeItinerary.curPoiNb = 0;
-    [self setItinerary];
-    self.title=@"Choose itinerary";
 }
 
 - (void) checkNearestPoi{
     
 }
 
++ (id) setStrategy:(id)_strategy {
+    self.strategy = _strategy;
+}
 @end
