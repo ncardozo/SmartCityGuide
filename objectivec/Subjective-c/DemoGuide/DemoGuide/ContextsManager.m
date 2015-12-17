@@ -40,12 +40,6 @@
     return self;
 }
 
--(void)dealloc {
-    [calendar release];
-    [locationManager release];
-    [super dealloc];
-}
-
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
     self.currentLocation = newLocation;
 }
