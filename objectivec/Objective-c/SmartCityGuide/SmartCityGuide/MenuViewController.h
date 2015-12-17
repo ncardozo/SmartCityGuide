@@ -2,8 +2,7 @@
 //  MenuViewController.h
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 09/12/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolás Cardozo on 17/12/15.
 //
 
 #import <UIKit/UIKit.h>

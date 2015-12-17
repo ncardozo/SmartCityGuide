@@ -9,10 +9,41 @@
 #import "FreeVisitMapViewController.h"
 #import <MapKit/MapKit.h>
 
+@implementation BaseFreeVisitMapViewController
+@synthesize cacheManager;
+
+
+@end
+
+@implementation FreeVisitMapViewControllerColor
+
+- (UIImageView*)getPinLook:(Poi*)p {
+    
+    UIImage * image;
+    NSString * pCategory = [p category];
+    if([pCategory compare:@"Culture"]==0){
+        image = [[self.cacheManager imagesDico] objectForKey:@"green_pin"];
+    }
+    else if([pCategory compare:@"Divertissement"]==0){
+        image = [[self.cacheManager imagesDico] objectForKey:@"blue_pin"];
+    }
+    else if([pCategory compare:@"Shopping"]==0){
+        image = [[self.cacheManager imagesDico] objectForKey:@"pink_pin"];
+    }
+    else{
+        image = [[self.cacheManager imagesDico] objectForKey:@"yellow_pin"];
+    }
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    return imageView;
+}
+
+@end
+
 @implementation FreeVisitMapViewController
-@synthesize mapView, annotations, mapPoiList, cacheManager;
+@synthesize mapView, annotations, mapPoiList;
 @synthesize currentLatitude, currentLongitude, locationManager; 
 @synthesize descView, currentLocation;
+@synthesize strategy;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -20,7 +51,6 @@
         // Custom initialization
         DescViewController * viewController = [[DescViewController alloc] initWithNibName:@"DescViewController" bundle:nil];
         self.descView = viewController;
-        [viewController release];
         [self.descView viewDidLoad];
     }
     return self;
@@ -54,18 +84,17 @@
                                 action:@selector(zoomToCurrentLocation)];
     
     self.navigationItem.rightBarButtonItem = comment;
-    [comment release];
     
     [self zoomToCurrentLocation];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(needRefresh:) 
-                                                 name:SCContextDidActivate
-                                               object:[[SCContextManager sharedContextManager] contextWithName:@"RefreshPoiMap"]];
+                                                 name: SCContextDidActivate
+                                               object:[FreeVisitMapViewController getStrategy]];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(needRefresh:) 
                                                  name:SCContextDidDeactivate
-                                               object:[[SCContextManager sharedContextManager] contextWithName:@"ColoredCategories"]];
+                                               object:[FreeVisitMapViewController getStrategy]];
 }
 
 -(void) updateAnnotations{
@@ -121,7 +150,6 @@
 }
 
 - (void)viewDidUnload {
-    [mapView release];
     mapView = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -149,8 +177,8 @@
     } else {
         MKAnnotation * myAnnotation = (MKAnnotation*)annotation;        
         static NSString * AnnotationIdentifier = @"AnnotationIdentifier";
-        MKPinAnnotationView * pinView = [[[MKPinAnnotationView alloc] 
-                                          initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier] autorelease];
+        MKPinAnnotationView * pinView = [[MKPinAnnotationView alloc]
+                                          initWithAnnotation:annotation reuseIdentifier:AnnotationIdentifier];
         
         //Basic properties
         pinView.animatesDrop = YES;
@@ -176,7 +204,7 @@
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
-    NSString * poiId = [NSString stringWithFormat:@"%d",control.tag];
+    NSString * poiId = [NSString stringWithFormat:@"%ld",control.tag];
     Poi * p = [[self.cacheManager poiById] objectForKey:poiId];
     
     [self.navigationController pushViewController:self.descView animated:YES];       
@@ -191,13 +219,6 @@
         [self.mapView addAnnotation:annotationPoint];
         [self.annotations addObject:annotationPoint];
     }
-    
-}
-
-- (void)dealloc {
-    [mapView release];
-    [annotations release];
-    [super dealloc];
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -211,14 +232,14 @@
     double decimal = fabs(newLocation.coordinate.latitude - latitude);
     int minutes = decimal * 60;
     double seconds = decimal * 3600 - minutes * 60;
-    NSString *lat = [NSString stringWithFormat:@"%d° %d' %1.4f\"", 
+    NSString *lat = [NSString stringWithFormat:@"%f° %d' %1.4f\"",
                      latitude, minutes, seconds];
     self.currentLatitude = lat;
     double longitude = newLocation.coordinate.longitude;
     decimal = fabs(newLocation.coordinate.longitude - longitude);
     minutes = decimal * 60;
     seconds = decimal * 3600 - minutes * 60;
-    NSString *longt = [NSString stringWithFormat:@"%d° %d' %1.4f\"", 
+    NSString *longt = [NSString stringWithFormat:@"%f° %d' %1.4f\"",
                        longitude, minutes, seconds];    
     
 }
@@ -229,14 +250,21 @@
 
 - (void)needRefresh:(NSNotification *)notification{
     [self updateAnnotations];
-    [[SCContextManager sharedContextManager] deactivateContextWithName:@"RefreshPoiMap"];
+    //[[SCContextManager sharedContextManager] deactivateContextWithName:@"RefreshPoiMap"];
 }
 
 
 -(UIImageView*) getPinLook:(Poi*) p{
     UIImage * image = [[self.cacheManager imagesDico] objectForKey:@"green_pin"];
-    UIImageView *imageView = [[[UIImageView alloc] initWithImage:image] autorelease];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     return imageView;
 }
 
++ (void) setStrategy:(id)_strategy {
+    self.strategy = _strategy;
+}
+
++ (id) getStrategy {
+    return self.strategy;
+}
 @end

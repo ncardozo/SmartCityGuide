@@ -2,10 +2,11 @@
 //  GuidedVisitMapController.m
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 24/03/12.
+//  Created by Nicolás Cardozo 16/12/2015
 //
 
 #import "GuidedVisitMapController.h"
+#import "POIViewController.h"
 
 @implementation BaseGuidedVisitMapController
 @synthesize mapView, mapContainerView, scrollView;
@@ -18,6 +19,7 @@
     self.navigationController.toolbarHidden=YES;
     [self hideItineraryChoice:NO];
     [GuidedVisitMapController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"BaseGuidedVisitMapController"])alloc] init]];
+    [POIViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"BasePOIViewController"])alloc] init]];
     self.currentPoi = 0;
     self.cacheManager.activeItinerary.curPoiNb = 0;
     [self setItinerary];
@@ -362,7 +364,11 @@
     
 }
 
-+ (id) setStrategy:(id)_strategy {
++ (void) setStrategy:(id)_strategy {
     self.strategy = _strategy;
+}
+
++ (id) getStrategy {
+    return self.getStrategy;
 }
 @end

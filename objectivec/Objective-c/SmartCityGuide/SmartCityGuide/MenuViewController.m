@@ -2,8 +2,7 @@
 //  MenuViewController.m
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 09/12/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolás Cardozo on 17/12/15.
 //
 
 #import "MenuViewController.h"
@@ -42,10 +41,6 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
--(void)dealloc{
-    [super dealloc];
 }
 
 - (void)viewDidUnload {
@@ -94,7 +89,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
@@ -133,7 +128,6 @@
     if(self.guidedView == nil){
         GuidedVisitMapController * viewController = [[GuidedVisitMapController alloc] initWithNibName:@"GuidedVisitMapController" bundle:nil];
         self.guidedView = viewController;
-        [viewController release];
         [self.guidedView viewDidLoad];
     }
     [self.navigationController pushViewController:self.guidedView animated:YES]; 
@@ -144,7 +138,6 @@
         
         FreeVisitMapViewController * viewController = [[FreeVisitMapViewController alloc] initWithNibName:@"FreeVisitMapViewController" bundle:nil];
         self.mapView = viewController;
-        [viewController release];
         [self.mapView viewDidLoad];
     }
     [self.navigationController pushViewController:self.mapView animated:YES]; 
@@ -154,7 +147,6 @@
     if(self.poiView == nil){
         POIViewController * viewController = [[POIViewController alloc] initWithNibName:@"POIViewController" bundle:nil];
         self.poiView = viewController;
-        [viewController release];
         [self.poiView viewDidLoad];
     }
     [self.navigationController pushViewController:self.poiView animated:YES]; 

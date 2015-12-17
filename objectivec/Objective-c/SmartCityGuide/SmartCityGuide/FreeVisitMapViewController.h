@@ -12,7 +12,23 @@
 #import "MKAnnotation.h"
 #import "DescViewController.h"
 
-@interface FreeVisitMapViewController : UIViewController{
+extern NSString * const SCContextDidActivate;
+extern NSString * const SCContextDidDeactivate;
+
+
+@interface BaseFreeVisitMapViewController : UIViewController {
+    CacheManager * cacheManager;
+}
+
+@property (retain, nonatomic) CacheManager * cacheManager;
+
+@end
+
+@interface FreeVisitMapViewControllerColor : BaseFreeVisitMapViewController
+- (UIImageView*)getPinLook:(Poi*) p;
+@end
+
+@interface FreeVisitMapViewController : BaseFreeVisitMapViewController {
     
     IBOutlet MKMapView *mapView;
     CLLocationManager *locationManager;
@@ -21,17 +37,17 @@
     
     NSMutableArray * annotations;
     NSMutableArray * mapPoiList;
-    CacheManager * cacheManager;
     
     id<MKAnnotation> currentLocation;
     
     DescViewController * descView;
+    
+    id strategy;
 }
 
 @property (retain, nonatomic) DescViewController * descView;
 @property (retain, nonatomic) id<MKAnnotation> currentLocation;
 @property (retain, nonatomic) NSMutableArray * mapPoiList;
-@property (retain, nonatomic) CacheManager * cacheManager;
 
 @property (nonatomic, retain) IBOutlet MKMapView *mapView;
 @property (nonatomic, retain) NSMutableArray * annotations;
@@ -40,6 +56,8 @@
 @property (retain, nonatomic) NSString* currentLongitude;
 @property (retain, nonatomic) CLLocationManager *locationManager;
 
+@property (retain, nonatomic) id strategy;
+
 - (void)mapViewDidFinishLoadingMap:(MKMapView*)mapView;
 - (void)mapViewDidFailLoadingMap:(MKMapView*)mapView withError:(NSError*) error;
 - (void)addPOILocations:(NSMutableArray *) poisList;
@@ -47,6 +65,9 @@
 - (void)zoomToCurrentLocation;
 - (void)recenterMap;
 - (void)updateAnnotations;
-- (UIImageView*) getPinLook:(Poi*)p;
+- (UIImageView*) getPinLook:(Poi*) p;
+
++ (void) setStrategy: _strategy;
++ (id) getStrategy;
 
 @end

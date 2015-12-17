@@ -2,8 +2,7 @@
 //  GuidedVisitMapController.h
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 24/03/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
+//  Created by Nicolás Cardozo 16/12/2015
 //
 
 #import <UIKit/UIKit.h>
@@ -24,7 +23,7 @@
     UIScrollView *scrollView;
     MKMapView * mapView;
     NSMutableArray * annotations;
-    NSMutableArray * itiList;
+    __unsafe_unretained NSMutableArray * itiList;
     
     UILabel *countLabel;
     UILabel *itiDescLabel;
@@ -83,7 +82,7 @@
 - (IBAction)goAction:(id)sender;
 - (IBAction)nextAction:(id)sender;
 
-+ (id) setStrategy: (id) _strategy;
++ (void) setStrategy: (id) _strategy;
 + (id) getStrategy;
 
 @end
