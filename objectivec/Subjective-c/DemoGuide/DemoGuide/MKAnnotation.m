@@ -35,11 +35,4 @@
 	return self;
 }
 
-- (void)dealloc {
-	[title release];
-    [location release];
-    [poi release];
-	[super dealloc];
-}
-
 @end
