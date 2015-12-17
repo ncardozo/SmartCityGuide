@@ -52,6 +52,8 @@
     ToolsCategoriesViewController * catView;
     NSString * updateMessage;
     UpdateAlertViewController * updateAlert;
+    
+    id strategy;
 }
 
 -(void) timeAdaptationToggled;

@@ -2,8 +2,7 @@
 //  POIViewController.h
 //  DemoGuide
 //
-//  Created by Guillaume Kaisin on 12/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
+//  Created by Nicolas Cardozo on 15/12/15.
 //
 
 
@@ -20,25 +19,9 @@
 #define CLOSED_TAG 6
 #define ITI_TAG 7
 
-@interface POIViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>{
+@interface BasePOIViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>{
     DemoGuideAppDelegate * appDelegate;
-    UITableViewCell * poiCell;
-    DescViewController * descView;
-    NSMutableDictionary * categoryPoiDict;
-    
-    IBOutlet UISegmentedControl *segmentedControl;
-    NSArray * poiSortList;
-    IBOutlet UITableView *tableView;
-    
-    //KID instance variables
-    UITableViewCell * poiCell_KID;
-    
-    UITableViewCell * poiCell_CATEGORY;
-    
-    UISegmentedControl *modifyPoiOrder;
-    
-    NSDictionary * normalSortList;
-    NSDictionary * itiSortList;
+    UITableViewCell * poiCell;    
 }
 
 @property (nonatomic, retain) IBOutlet UITableViewCell *poiCell;
@@ -46,20 +29,95 @@
 @property (retain, nonatomic) DescViewController * descView;
 @property (retain, nonatomic) NSMutableDictionary * categoryPoiDict;
 
-@property (retain, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
-@property (retain, nonatomic) NSArray * poiSortList;
-@property (retain, nonatomic) IBOutlet UITableView *tableView;
-
-//KID properties
-@property (nonatomic, retain) IBOutlet UITableViewCell *poiCell_KID;
-
-@property (nonatomic, retain) IBOutlet UITableViewCell *poiCell_CATEGORY;
 
 @property (nonatomic, retain) NSDictionary * normalSortList;
 @property (nonatomic, retain) NSDictionary * itiSortList;
 
-- (IBAction)modifyPoiOrder:(id)sender;
 -(void)setUpCell:(UITableViewCell*)cell ForPoi:(Poi *)p;
+@end
+
+@interface POIViewControllerKid : BasePOIViewController {
+    //KID instance variables
+    UITableViewCell * poiCell_KID;
+
+}
+
+@property (nonatomic, retain) IBOutlet UITableViewCell *poiCell_KID;
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)index;
+@end
+
+@interface POIViewControllerTime : BasePOIViewController
+- (void)setUpCell:(UITableViewCell*)cell ForPoi:(Poi *) p;
+@end
+
+@interface POIViewControllerGuidedTour : BasePOIViewController
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
+- (void) tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath;
+@end
+
+@interface POIViewControllerCategory : BasePOIViewController {
+    UITableViewCell * poiCell_CATEGORY;
+}
+
+@property (nonatomic, retain) IBOutlet UITableViewCell *poiCell_CATEGORY;
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView;
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
+- (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+@end
+
+@interface POIViewControllerGuidedTourEN : BasePOIViewController
+-(NSArray *) poiSortList;
+@end
+
+@interface POIViewControllerGuidedTourNL : BasePOIViewController
+-(NSArray *) poiSortList;
+@end
+
+@interface POIViewControllerGuidedTourFR : BasePOIViewController
+-(NSArray *) poiSortList;
+@end
+
+@interface POIViewControllerEN : BasePOIViewController
+-(NSArray *) poiSortList;
+@end
+
+@interface POIViewControllerNL : BasePOIViewController
+-(NSArray *) poiSortList;
+@end
+
+@interface POIViewControllerFR : BasePOIViewController
+-(NSArray *) poiSortList;
+@end
+
+@interface POIViewController : BasePOIViewController {
+    DescViewController * descView;
+    NSMutableDictionary * categoryPoiDict;
+    
+    IBOutlet UISegmentedControl *segmentedControl;
+    NSArray * poiSortList;
+    IBOutlet UITableView *tableView;
+    
+    UISegmentedControl *modifyPoiOrder;
+    
+    NSDictionary * normalSortList;
+    NSDictionary * itiSortList;
+    
+    id strategy;
+}
+
+@property (retain, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
+@property (retain, nonatomic) NSArray * poiSortList;
+@property (retain, nonatomic) IBOutlet UITableView *tableView;
+
+- (IBAction)modifyPoiOrder:(id)sender;
+- (void)setUpCell:(UITableViewCell*)cell ForPoi:(Poi *)p;
 - (void) resetPoiSortTab;
++ (void) setStrategy: (id) _strategy;
 
 @end

@@ -8,12 +8,272 @@
 
 #import "POIViewController.h"
 
-@implementation POIViewController
+@implementation BasePOIViewController
 @synthesize poiCell;
 @synthesize appDelegate;
 @synthesize descView;
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    // Return the number of rows in the section.
+    
+    NSArray * poisList = [[self.appDelegate cacheManager] poiByName];
+    return [poisList count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"Cell";
+    NSArray * poisList = [[self.appDelegate cacheManager] poiByName];
+    Poi * curPoi = [poisList objectAtIndex:indexPath.row];
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        /*cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];*/
+        [[NSBundle mainBundle] loadNibNamed:@"POIViewCell" owner:self options:nil];
+        cell = poiCell;
+        self.poiCell = nil;
+    }
+    
+    // Configure the cell...
+    [self setUpCell:cell ForPoi:curPoi];
+    
+    return cell;
+}
+
+-(void)setUpCell:(UITableViewCell*)cell ForPoi:(Poi *)p{
+    UILabel * titleLabel = (UILabel *)[cell viewWithTag:TITLE_TAG];
+    UILabel * subTitle = (UILabel *)[cell viewWithTag:SUBTITLE_TAG];
+    UIImageView * poiImage = (UIImageView *)[cell viewWithTag:IMAGE_TAG];
+    
+    titleLabel.text = [p name];
+    subTitle.text = [p category];
+    poiImage.image = [p image];
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+@end
+
+@implementation POIViewControllerGuidedTourEN
+-(NSArray *) poiSortList{
+    return [self.itiSortList objectForKey:@"en"];
+}
+
+@end
+
+@implementation POIViewControllerGuidedTourNL
+-(NSArray *) poiSortList{
+    return [self.itiSortList objectForKey:@"nl"];
+}
+
+@end
+
+@implementation POIViewControllerGuidedTourFR
+-(NSArray *) poiSortList{
+    return [self.itiSortList objectForKey:@"fr"];
+}
+
+@end
+
+@implementation POIViewControllerEN
+-(NSArray *) poiSortList{
+    return [self.normalSortList objectForKey:@"en"];
+}
+
+@end
+
+@implementation POIViewControllerNL
+-(NSArray *) poiSortList{
+    return [self.normalSortList objectForKey:@"nl"];
+}
+
+@end
+
+@implementation POIViewControllerFR
+-(NSArray *) poiSortList{
+    return [self.normalSortList objectForKey:@"fr"];
+}
+
+@end
+
+@implementation POIViewControllerTime
+- (void)setUpCell:(UITableViewCell*)cell ForPoi:(Poi *)p {
+    BOOL pClosed = [p isClosed];
+    if(pClosed){
+        UIImageView * closedImage = (UIImageView *)[cell viewWithTag:CLOSED_TAG];
+        closedImage.image = [[p imagesDico] objectForKey:@"closed"];
+    }
+    
+    UILabel * titleLabel = (UILabel *)[cell viewWithTag:TITLE_TAG];
+    UILabel * subTitle = (UILabel *)[cell viewWithTag:SUBTITLE_TAG];
+    UIImageView * poiImage = (UIImageView *)[cell viewWithTag:IMAGE_TAG];
+    
+    titleLabel.text = [p name];
+    subTitle.text = [p category];
+    poiImage.image = [p image];
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
+
+@end
+
+@implementation POIViewControllerKid
+@synthesize poiCell_KID;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"Cell";
+    NSMutableArray * poisList = [[self.appDelegate cacheManager] poisList];
+    Poi * curPoi = [poisList objectAtIndex:indexPath.row];
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        /*cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];*/
+        [[NSBundle mainBundle] loadNibNamed:@"POIViewCell_KID" owner:self options:nil];
+        cell = poiCell_KID;
+        self.poiCell_KID = nil;
+    }
+    
+    // Configure the cell...
+    /*cell.textLabel.text = [curPoi name];
+     UIImageView * poiImage = [[UIImageView alloc] initWithImage:[curPoi imagePoi]];
+     [cell.contentView addSubview:poiImage];
+     [poiImage release];*/
+    UILabel * titleLabel = (UILabel *)[cell viewWithTag:TITLE_TAG];
+    UIImageView * poiImage = (UIImageView *)[cell viewWithTag:IMAGE_TAG];
+    
+    titleLabel.text = [curPoi name];
+    poiImage.image = [curPoi image];
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)index {
+    return 120;
+}
+
+@end
+
+@implementation POIViewControllerGuidedTour
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"Cell";
+    NSArray * poisList = [[[self.appDelegate cacheManager] activeItinerary] itineraryPois];
+    Poi * curPoi = [poisList objectAtIndex:indexPath.row];
+    Itinerary * curIti = [self.appDelegate.cacheManager activeItinerary];
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        [[NSBundle mainBundle] loadNibNamed:@"POIViewCell" owner:self options:nil];
+        cell = poiCell;
+        self.poiCell = nil;
+    }
+    
+    BOOL nextPoi = (indexPath.row == curIti.curPoiNb);
+    UIImageView * itiImage = (UIImageView *)[cell viewWithTag:ITI_TAG];
+    NSString * imgUrl;
+    if(nextPoi) {
+        imgUrl = [NSString stringWithFormat:@"number%ld", indexPath.row+1];
+    } else {
+        imgUrl = [NSString stringWithFormat:@"number%ld_grey", indexPath.row+1];
+    }
+    itiImage.image = [self.appDelegate.cacheManager.imagesDico objectForKey:imgUrl];
+    
+    [self setUpCell:cell ForPoi:curPoi];
+    
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.appDelegate.cacheManager.activeItinerary.itineraryPois count];
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray * poisList = [[[self.appDelegate cacheManager] activeItinerary] itineraryPois];
+    Poi * curPoi = [poisList objectAtIndex:indexPath.row];
+    Description *curDesc = [curPoi description];
+    
+    if(self.descView == nil){
+        DescViewController * viewController = [[DescViewController alloc] initWithNibName:@"DescViewController" bundle:nil];
+        self.descView = viewController;
+        [self.descView viewDidLoad];
+    }
+    [self.navigationController pushViewController:self.descView animated:YES];
+    //Set view attributes
+    [self.descView setupView:curPoi];
+}
+
+@end
+
+@implementation POIViewControllerCategory
+@synthesize poiCell_CATEGORY;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // Return the number of sections.
+    NSMutableDictionary * poisList = [[self.appDelegate cacheManager] poisByCategory];
+    return[[poisList allKeys] count];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // Return the number of rows in the section.
+    NSMutableDictionary * poisList = [[self.appDelegate cacheManager] poisByCategory];
+    NSMutableArray * array = [poisList objectForKey:[[poisList allKeys] objectAtIndex:section]];
+    return [array count];
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSMutableDictionary * poisList = [[self.appDelegate cacheManager] poisByCategory];
+    return [[poisList allKeys] objectAtIndex:section];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *CellIdentifier = @"Cell";
+    NSMutableDictionary * poisList = [[self.appDelegate cacheManager] poisByCategory];
+    NSMutableArray * array = [poisList objectForKey:[[poisList allKeys] objectAtIndex:indexPath.section]];
+    
+    Poi * curPoi = [array objectAtIndex:indexPath.row];
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        [[NSBundle mainBundle] loadNibNamed:@"POIViewCell" owner:self options:nil];
+        cell = poiCell;
+        self.poiCell = nil;
+    }
+    
+    UILabel * titleLabel = (UILabel *)[cell viewWithTag:TITLE_TAG];
+    UILabel * subTitle = (UILabel *)[cell viewWithTag:SUBTITLE_TAG];
+    UIImageView * poiImage = (UIImageView *)[cell viewWithTag:IMAGE_TAG];
+    
+    titleLabel.text = [curPoi name];
+    subTitle.text = [curPoi address];
+    poiImage.image = [curPoi image];
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Navigation logic may go here. Create and push another view controller.
+    NSMutableDictionary * poisList = [[self.appDelegate cacheManager] poiByCategory];
+    NSMutableArray * array = [poisList objectForKey:[[poisList allKeys] objectAtIndex:indexPath.section]];
+    
+    Poi * curPoi = [array objectAtIndex:indexPath.row];
+    Description * curDesc = [curPoi description];
+    
+    if(self.descView == nil){
+        DescViewController * viewController = [[DescViewController alloc] initWithNibName:@"DescViewController" bundle:nil];
+        self.descView = viewController;
+        [self.descView viewDidLoad];
+    }
+    [self.navigationController pushViewController:self.descView animated:YES];
+    //Set view attributes
+    [self.descView setupView:curPoi];
+}
+
+@end
+
+@implementation POIViewController
 @synthesize categoryPoiDict;
-@synthesize poiCell_KID, poiCell_CATEGORY;
 @synthesize tableView, segmentedControl, poiSortList, normalSortList, itiSortList;
 
 - (void)didReceiveMemoryWarning {
@@ -38,7 +298,6 @@
             }
         }
         [self.categoryPoiDict setObject:poiArray forKey:[cat idString]];
-        [poiArray release];
     }
     [self.segmentedControl removeAllSegments];
     self.normalSortList = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
@@ -70,9 +329,7 @@
 
 - (void)viewDidUnload {
     [self setPoiCell:nil];
-    [segmentedControl release];
     segmentedControl = nil;
-    [tableView release];
     tableView = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -105,22 +362,20 @@
 
 #pragma mark - Table view data source
 - (IBAction)modifyPoiOrder:(id)sender {
-    int index = self.segmentedControl.selectedSegmentIndex;
-    int maxIndex = self.segmentedControl.numberOfSegments;
-    NSString * orderName = [self.poiSortList objectAtIndex:index];
+    long index = self.segmentedControl.selectedSegmentIndex;
+    long maxIndex = self.segmentedControl.numberOfSegments;
     
-    [[SCContextManager sharedContextManager] deactivateContextWithName:@"CategoryPoiOrder"];
-    [[SCContextManager sharedContextManager] deactivateContextWithName:@"ItineraryPoiOrder"];
+    [POIViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"BasePOIViewController"]) alloc] init]];
     
     if(maxIndex == 3) { // Guided tour active
         if(index==0){
-            [[SCContextManager sharedContextManager] activateContextWithName:@"ItineraryPoiOrder"];
+            [POIViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"POIViewController%@", @"GuidedTour"]) alloc] init]];
         } else if(index==2) {
-            [[SCContextManager sharedContextManager] activateContextWithName:@"CategoryPoiOrder"];
+            [POIViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"POIViewController%@", @"Category"]) alloc] init]];
         }
     } else if(maxIndex==2) { // Guided tour inactive
         if(index==1) {
-            [[SCContextManager sharedContextManager] activateContextWithName:@"CategoryPoiOrder"];
+            [POIViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"POIViewController%@", @"GuidedTour"]) alloc] init]];
         }
     }
 
@@ -190,7 +445,6 @@
     if(self.descView == nil) {
         DescViewController * viewController = [[DescViewController alloc] initWithNibName:@"DescViewController" bundle:nil];
         self.descView = viewController;
-        [viewController release];
         [self.descView viewDidLoad];
     }
 	[self.navigationController pushViewController:self.descView animated:YES];       
@@ -206,13 +460,6 @@
         i+=1;
     }
     self.segmentedControl.selectedSegmentIndex = 0;
-}
-
-- (void)dealloc {
-    [poiCell release];
-    [segmentedControl release];
-    [tableView release];
-    [super dealloc];
 }
 
 @end
