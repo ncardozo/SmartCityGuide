@@ -81,22 +81,19 @@ static void PrintReachabilityFlags(SCNetworkReachabilityFlags    flags, const ch
 static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info) {
 	#pragma unused (target, flags)
 	NSCAssert(info != NULL, @"info was NULL in ReachabilityCallback");
-	NSCAssert([(NSObject*) info isKindOfClass: [Reachability class]], @"info was wrong class in ReachabilityCallback");
+	NSCAssert([(NSObject*) CFBridgingRelease(info isKindOfClass: [Reachability class]], @"info was wrong class in ReachabilityCallback");
 
 	//We're on the main RunLoop, so an NSAutoreleasePool is not necessary, but is added defensively
 	// in case someon uses the Reachablity object in a different thread.
-	NSAutoreleasePool* myPool = [[NSAutoreleasePool alloc] init];
 	
-	Reachability* noteObject = (Reachability*) info;
+	Reachability* noteObject = (__bridge Reachability*) info;
 	// Post a notification to notify the client that the network reachability changed.
 	[[NSNotificationCenter defaultCenter] postNotificationName: kReachabilityChangedNotification object: noteObject];
-	
-	[myPool release];
 }
 
 - (BOOL) startNotifier {
 	BOOL retVal = NO;
-	SCNetworkReachabilityContext	context = {0, self, NULL, NULL, NULL};
+	SCNetworkReachabilityContext	context = {0, (__bridge void *)(self), NULL, NULL, NULL};
 	if(SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context)) {
 		if(SCNetworkReachabilityScheduleWithRunLoop(reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode)) {
 			retVal = YES;
@@ -111,19 +108,11 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	}
 }
 
-- (void) dealloc {
-	[self stopNotifier];
-	if(reachabilityRef!= NULL) {
-		CFRelease(reachabilityRef);
-	}
-	[super dealloc];
-}
-
 + (Reachability*) reachabilityWithHostName: (NSString*) hostName; {
 	Reachability* retVal = NULL;
 	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, [hostName UTF8String]);
 	if(reachability!= NULL) {
-		retVal= [[[self alloc] init] autorelease];
+		retVal= [[self alloc] init];
 		if(retVal!= NULL) {
 			retVal->reachabilityRef = reachability;
 			retVal->localWiFiRef = NO;
@@ -137,7 +126,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr*)hostAddress);
 	Reachability* retVal = NULL;
 	if(reachability!= NULL) {
-		retVal= [[[self alloc] init] autorelease];
+		retVal= [[self alloc] init];
 		if(retVal!= NULL) {
 			retVal->reachabilityRef = reachability;
 			retVal->localWiFiRef = NO;
