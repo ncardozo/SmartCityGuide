@@ -46,19 +46,12 @@
 }
 
 - (void)viewDidUnload {
-    [titleLabel release];
     titleLabel = nil;
-    [subtitleLabel release];
     subtitleLabel = nil;
-    [imagePoi release];
     imagePoi = nil;
-    [addressPoi release];
     addressPoi = nil;
-    [descText release];
     descText = nil;
-    [scrollView release];
     scrollView = nil;
-    [backgroundLabel release];
     backgroundLabel = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -68,17 +61,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)dealloc {
-    [titleLabel release];
-    [subtitleLabel release];
-    [imagePoi release];
-    [addressPoi release];
-    [descText release];
-    [scrollView release];
-    [backgroundLabel release];
-    [super dealloc];
 }
 
 @end

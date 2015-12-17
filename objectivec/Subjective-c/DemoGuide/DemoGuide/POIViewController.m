@@ -38,7 +38,6 @@
             }
         }
         [self.categoryPoiDict setObject:poiArray forKey:[cat idString]];
-        [poiArray release];
     }
     [self.segmentedControl removeAllSegments];
     self.normalSortList = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:
@@ -70,9 +69,7 @@
 
 - (void)viewDidUnload {
     [self setPoiCell:nil];
-    [segmentedControl release];
     segmentedControl = nil;
-    [tableView release];
     tableView = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -105,9 +102,8 @@
 
 #pragma mark - Table view data source
 - (IBAction)modifyPoiOrder:(id)sender {
-    int index = self.segmentedControl.selectedSegmentIndex;
-    int maxIndex = self.segmentedControl.numberOfSegments;
-    NSString * orderName = [self.poiSortList objectAtIndex:index];
+    long index = self.segmentedControl.selectedSegmentIndex;
+    long maxIndex = self.segmentedControl.numberOfSegments;
     
     [[SCContextManager sharedContextManager] deactivateContextWithName:@"CategoryPoiOrder"];
     [[SCContextManager sharedContextManager] deactivateContextWithName:@"ItineraryPoiOrder"];
@@ -190,7 +186,6 @@
     if(self.descView == nil) {
         DescViewController * viewController = [[DescViewController alloc] initWithNibName:@"DescViewController" bundle:nil];
         self.descView = viewController;
-        [viewController release];
         [self.descView viewDidLoad];
     }
 	[self.navigationController pushViewController:self.descView animated:YES];       
@@ -206,13 +201,6 @@
         i+=1;
     }
     self.segmentedControl.selectedSegmentIndex = 0;
-}
-
-- (void)dealloc {
-    [poiCell release];
-    [segmentedControl release];
-    [tableView release];
-    [super dealloc];
 }
 
 @end

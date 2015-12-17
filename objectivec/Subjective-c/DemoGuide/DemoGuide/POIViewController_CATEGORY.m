@@ -72,7 +72,6 @@
     if(self.descView == nil){
         DescViewController * viewController = [[DescViewController alloc] initWithNibName:@"DescViewController" bundle:nil];
         self.descView = viewController;
-        [viewController release];
         [self.descView viewDidLoad];
     }
 	[self.navigationController pushViewController:self.descView animated:YES];       

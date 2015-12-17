@@ -20,7 +20,6 @@
         // Custom initialization
         DescViewController * viewController = [[DescViewController alloc] initWithNibName:@"DescViewController" bundle:nil];
         self.descView = viewController;
-        [viewController release];
         [self.descView viewDidLoad];
     }
     return self;
@@ -54,7 +53,6 @@
                                 action:@selector(zoomToCurrentLocation)];
     
     self.navigationItem.rightBarButtonItem = comment;
-    [comment release];
     
     [self zoomToCurrentLocation];
     
@@ -121,7 +119,6 @@
 }
 
 - (void)viewDidUnload {
-    [mapView release];
     mapView = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -176,7 +173,7 @@
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control{
-    NSString * poiId = [NSString stringWithFormat:@"%d",control.tag];
+    NSString * poiId = [NSString stringWithFormat:@"%ld",(long)control.tag];
     Poi * p = [[self.cacheManager poiById] objectForKey:poiId];
     
     [self.navigationController pushViewController:self.descView animated:YES];       
@@ -194,12 +191,6 @@
     
 }
 
-- (void)dealloc {
-    [mapView release];
-    [annotations release];
-    [super dealloc];
-}
-
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error {
     NSLog(@"Error: %@", [error description]);
@@ -211,14 +202,14 @@
     double decimal = fabs(newLocation.coordinate.latitude - latitude);
     int minutes = decimal * 60;
     double seconds = decimal * 3600 - minutes * 60;
-    NSString *lat = [NSString stringWithFormat:@"%d° %d' %1.4f\"", 
+    NSString *lat = [NSString stringWithFormat:@"%f° %d' %1.4f\"",
                      latitude, minutes, seconds];
     self.currentLatitude = lat;
     double longitude = newLocation.coordinate.longitude;
     decimal = fabs(newLocation.coordinate.longitude - longitude);
     minutes = decimal * 60;
     seconds = decimal * 3600 - minutes * 60;
-    NSString *longt = [NSString stringWithFormat:@"%d° %d' %1.4f\"", 
+    NSString *longt = [NSString stringWithFormat:@"%f° %d' %1.4f\"",
                        longitude, minutes, seconds];    
     
 }

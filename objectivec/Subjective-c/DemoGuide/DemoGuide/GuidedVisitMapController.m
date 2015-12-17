@@ -18,7 +18,6 @@
         // Custom initialization
         DescViewController * viewController = [[DescViewController alloc] initWithNibName:@"DescViewController" bundle:nil];
         self.descView = viewController;
-        [viewController release];
         [self.descView viewDidLoad];
         self.currentIti = 0;
         self.currentPoi = 0;
@@ -56,7 +55,6 @@
                                 action:@selector(recenterMap)];
     
     self.navigationItem.rightBarButtonItem = comment;
-    [comment release];
     
     self.mapView = [[[MKMapView alloc] initWithFrame:self.mapContainerView.frame] autorelease];
     self.mapView.delegate = self;
@@ -99,17 +97,6 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)dealloc {
-    [mapContainerView release];
-    [scrollView release];
-    [previousButton release];
-    [goButton release];
-    [nextButton release];
-    [itiDescLabel release];
-    [countLabel release];
-    [super dealloc];
 }
 
 -(MKAnnotationView*)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
@@ -186,7 +173,6 @@
     if(!gpsContext.isActive){
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Guided Tour" message:@"GPS is disabled on this device.  The Guided tour will not take into account your localization.  Click on \"next\" button to progress into the itinerary" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
-        [alert release];
     }
     
     self.title = @"Guided Tour";
@@ -254,7 +240,7 @@
     [self.mapView removeAnnotations:self.annotations];
     [self addPoiAnnotations];
     //Set count button
-    self.countLabel.text=[NSString stringWithFormat:@"%d/%d", self.currentIti+1, [[self.cacheManager itineraryList] count]];
+    self.countLabel.text=[NSString stringWithFormat:@"%d/%lul", self.currentIti+1, [[self.cacheManager itineraryList] count]];
 }
 
 - (void) hideItineraryChoice:(BOOL)hide{
@@ -283,7 +269,6 @@
 - (void)nextPoi{
     Itinerary * curIti = [itiList objectAtIndex:currentIti]; 
     NSArray * itiPois = [curIti itineraryPois];
-    Poi * curPoi = [itiPois objectAtIndex:currentPoi-1];
     
     if(currentPoi == [itiPois count]){
         [self cancelItinerary];
