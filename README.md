@@ -11,3 +11,7 @@ This repository contains six implementations of Smart City Guide
   * Context Traits 
   * CLOS
   * Ambience
+
+To count the lines of code in an Objective-C program you need to execute the command
+find . \( -iname \*.m -o -iname \*.mm -o -iname \*.c -o -iname \*.cc -o -iname \*.h \) -exec wc -l '{}' \+
+from the project's root directory
