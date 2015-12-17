@@ -11,10 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "MKAnnotation.h"
 #import "DescViewController.h"
-
-extern NSString * const SCContextDidActivate;
-extern NSString * const SCContextDidDeactivate;
-
+#import "GlobalConstants.h"
 
 @interface BaseFreeVisitMapViewController : UIViewController {
     CacheManager * cacheManager;

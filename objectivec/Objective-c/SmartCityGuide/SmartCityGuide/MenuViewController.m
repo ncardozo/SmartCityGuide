@@ -85,7 +85,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"Cell";
     
-    int section = indexPath.section;
+    long section = indexPath.section;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -115,8 +115,8 @@
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    int selectedRow = indexPath.row;
-    int selectedSection = indexPath.section;
+    long selectedRow = indexPath.row;
+    long selectedSection = indexPath.section;
 
     if(selectedSection==0) [self loadPoisList];
     else if(selectedSection==1 && selectedRow==0) [self loadGuidedTour];
