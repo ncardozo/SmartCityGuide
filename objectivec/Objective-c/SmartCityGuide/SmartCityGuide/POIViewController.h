@@ -96,7 +96,6 @@
 @end
 
 @interface POIViewController : BasePOIViewController {
-    DescViewController * descView;
     NSMutableDictionary * categoryPoiDict;
     
     IBOutlet UISegmentedControl *segmentedControl;
