@@ -62,6 +62,7 @@
     [Description setStrategy: [[NSClassFromString([NSString stringWithFormat:@"Description%@", @"NL"]) alloc] init]];
     return [[self description] description];
 }
+
 @end
 
 @implementation PoiMorning
@@ -69,6 +70,15 @@
     NSString * url = [NSString stringWithFormat:@"%@%@", @"morning_", self.imagePoi];
     return [self.imagesDico objectForKey:url];
 }
+
+@end
+
+@implementation PoiAfternoon
+- (UIImage *) image {
+    NSString * url = [NSString stringWithFormat:@"%@%@", @"afternoon_", self.imagePoi];
+    return [self.imagesDico objectForKey:url];
+}
+
 @end
 
 @implementation PoiEvening
@@ -76,6 +86,7 @@
     NSString * url = [NSString stringWithFormat:@"%@%@", @"evening_", self.imagePoi];
     return [self.imagesDico objectForKey:url];
 }
+
 @end
 
 @implementation Poi

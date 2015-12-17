@@ -49,6 +49,10 @@
 - (UIImage *) image;
 @end
 
+@interface PoiAfternoon : BasePoi
+- (UIImage *) image;
+@end
+
 @interface PoiEvening : BasePoi
 - (UIImage *) image;
 @end
