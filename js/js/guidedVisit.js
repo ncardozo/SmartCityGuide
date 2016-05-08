@@ -1,5 +1,6 @@
 var ContextManager = require("./contextManager.js");
 var db = require("./DBManager.js");
+var user = require("./user.js").User;
 
 var GuidedVisitStrategy = function() {
 	this.id = -1;
@@ -7,7 +8,7 @@ var GuidedVisitStrategy = function() {
 	this.description = "";
 	this.annotations = new Map();  //map view annotated with all pois {(lat, long), annotation}
 	this.currentItinerary = currentIti; //int
-	this.currentPOI = currentPoi;
+	this.currentPOI = currentPoi; //int
 };
 
 GuidedVisitStrategy.prototype.setDescription = function(desc) {
@@ -18,8 +19,15 @@ GuidedVisitStrategy.prototype.getDescription = function() {
 		throw new Error("A language strategy needs to be defined to get the GuidedVisit description");
 };
 
-GuidedVisitStrategy.prototype.updateItineraries = function() {
+GuidedVisitStrategy.prototype.hideItineraryChoice = function(hide) {
+		if(hide)
+			console.log("displaying choice of itinerary option");
+		else
+			console.log("no choice of itinerary option is displayed");
+};
 
+GuidedVisitStrategy.prototype.updateItineraries = function() {
+	this.itineraryList =  itineraryList;
 };
 
 GuidedVisitStrategy.prototype.addPoiAnnotations = function() {
@@ -28,36 +36,69 @@ GuidedVisitStrategy.prototype.addPoiAnnotations = function() {
 			var poi = pois[i];
 			var pos = [poi.latitude, poi.longitude];
 			this.annotations[pos] = {
-										"poi": poi.name[poi.language],
-										"state": poi.state
+										"poi": poi.name(),
+										"state": poi.state()
 									};
 		}
 };
 
 GuidedVisitStrategy.prototype.setItinerary = function(id) {
+		var itinerary;
 		if(typeof this.itineraryList[id] !== 'undefined') {
-			this.currentItinerary = this.itineraryList[id];
+			itinerary = this.itineraryList[id];
 		}
+		this.strategy.setDescription(itinerary.getDescription());
+		console.log("Itinerary count: " + (this.currentItinerary + 1) + "/" + this.itineraryList.length);
 };
 
 GuidedVisitStrategy.prototype.checkNearestPoit = function() {
-
+	var currentLocation = user.getLocation();
+	var nearestPoi = null;
+	var nearestDist = 0;
+	var poi;
+	var pois = this.itineraryList[this.currentItinerary].getItineraryPOIs();
+	for(var i=0; i< pois.length; i++) {
+		poi = pois[i];
+		if(nearestPoi === null) {
+			nearestPoi = poi;
+			nearestDist = poi.distanceBetween(currentLocation);
+		} else {
+			var curDist = poi.distanceBetween(currentLocation);
+			if(curDist < nearestDist) {
+				nearestPoi = poi;
+				nearestDist = curDist;
+			}
+		}
+	}
+	var indexPoi = nearestPoi.id();
+	if(indexPoi === this.currentPoi) {
+		this.nextPoi();
+	}
 };
 
 GuidedVisitStrategy.prototype.refreshAnnotations = function() {
-
-};
-
-GuidedVisitStrategy.prototype.hideItineraryChoice = function(choice) {
-
+	this.addPoiAnnotations();
 };
 
 GuidedVisitStrategy.prototype.nextPoi = function() {
-
+	var itinerary = this.itineraryList[this.currentItinerary];
+	var itineraryPOIs = itinerary.getItineraryPOIs();
+	if(this.currentPoi === itineraryPOIs[itineraryPOIs.length -1]){
+        this.cancelItinerary();
+  } else {
+      this.currentPoi += 1;
+      this.refreshAnnotations();
+  }
 };
 
 GuidedVisitStrategy.prototype.cancelItinerary = function() {
-
+ //@TODO
+//	[GuidedVisitMapController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"BaseGuidedVisitMapController"])alloc] init]];
+	POI.Poi.setStrategy(new Poi.PoiStrategy());
+//	[POIViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"BasePOIViewController"])alloc] init]];
+	this.currentPoi = 0;
+	this.setItinerary();
+	console.log("Choose itinerary");
 };
 
 //--- ADAPTATIONS
@@ -96,6 +137,13 @@ var GuidedVisit = function(strategy) {
 	this.strategy = strategy;
 };
 
+GuidedVisit.prototype.description = function() {
+	return this.strategy.getDescription();
+};
+
+GuidedVisit.prototype.addDescription = function(desc) {
+	this.strategy.setDescription(desc);
+};
 
 module.exports = {
 	GuidedVisit: GuidedVisit,
