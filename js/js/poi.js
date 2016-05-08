@@ -156,6 +156,10 @@ Poi.prototype.setStrategy = function(strategy) {
 	this.strategy = strategy;
 };
 
+Poi.prototype.id = function() {
+	return this.strategy.getId();
+};
+
 Poi.prototype.name = function() {
 	return this.strategy.getName();
 };
@@ -184,8 +188,16 @@ Poi.prototype.addCategory = function(category) {
 	this.strategy.addCategory(category);
 };
 
+Poi.prototype.state = function() {
+	this.strategy.getState();
+};
+
 Poi.prototype.setState = function(state) {
 	this.strategy.setState();
+};
+
+Poi.prototype.distanceBetween = function() {
+
 };
 
 module.exports = {

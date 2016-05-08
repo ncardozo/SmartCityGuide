@@ -23,6 +23,10 @@ ItineraryStrategy.prototype.currentPOI = function(num) {
 	this.currentPOI = num;
 };
 
+ItineraryStrategy.prototype.getItineraryPOIs = function() {
+	return this.itineraryPOIs;
+};
+
 //--- ADAPTATIONS
 var EnglishItineraryStrategy = function() {};
 EnglishItineraryStrategy.prototype = Object.create(ItineraryStrategy.prototype);
@@ -51,6 +55,19 @@ var Itinerary = function(iD, description, strategy) {
 	this.strategy.setId(iD);
 	this.strategy.setDescription(description);
 };
+
+Itinerary.prototype.description = function() {
+	return this.strategy.getDescription();
+};
+
+Itenerary.prototype.addDescription = function(desc) {
+	this.strategy.setDescription(desc);
+};
+
+ItineraryStrategy.prototype.getItineraryPOIs = function() {
+	return this.strategy.getItineraryPOIs();
+};
+
 
 module.exports = {
 	Itinerary: Itinerary,
