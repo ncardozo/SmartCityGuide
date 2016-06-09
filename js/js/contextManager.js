@@ -38,3 +38,7 @@ ContextManager.prototype.updateConnectivityStatus = function() {
 
   }
 };
+
+ContextManager.prototype.updateMemory = function() {
+  
+};
