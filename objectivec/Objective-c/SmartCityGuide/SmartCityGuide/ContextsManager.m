@@ -62,8 +62,8 @@
     [Poi setStrategy:[[NSClassFromString([NSString stringWithFormat:@"BasePoi"])alloc] init]];
     
     self.currentDate = [NSDate date];
-    NSDateComponents * curHour = [self.calendar components:NSHourCalendarUnit fromDate:self.currentDate]; 
-    int hour = [curHour hour];
+    NSDateComponents * curHour = [self.calendar components:NSCalendarUnitHour fromDate:self.currentDate];
+    long hour = [curHour hour];
     if(hour<12) {
         [Poi setStrategy:[[NSClassFromString([NSString stringWithFormat:@"Poi%@", @"Morning"])alloc] init]];
 

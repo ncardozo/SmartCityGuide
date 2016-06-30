@@ -187,4 +187,11 @@
     return @"error lang context init";
 }
 
++ (void) setStrategy:(id)_strategy {
+    self.strategy = _strategy;
+}
+
++ (id) getStrategy {
+    return self.strategy;
+}
 @end
