@@ -3,7 +3,6 @@
 //  DemoGuide
 //
 //  Created by Guillaume Kaisin on 14/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

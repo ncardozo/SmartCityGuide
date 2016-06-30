@@ -3,7 +3,6 @@
 //  DemoGuide
 //
 //  Created by Kim Mens on 21/05/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "Poi_LANGUAGE.h"
@@ -11,34 +10,46 @@
 @implementation Poi (Poi_LANGUAGE)
 
 
-@contexts French
--(NSString*) address{
-    return [self.addresses objectForKey:@"fr"];
-}
-
 @contexts English
 -(NSString*) address{
-    return [self.addresses objectForKey:@"en"];
+    NSString *query = [NSString stringWithFormat:@"SELECT address FROM Poi WITH language = %@ AND id_poi = %d", @"en", [self poiId]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
 }
 
 @contexts Dutch
 -(NSString*) address{
-    return [self.addresses objectForKey:@"nl"];
+    NSString *query = [NSString stringWithFormat:@"SELECT address FROM Poi WITH language = %@ AND id_poi = %d", @"nl", [self poiId]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
+}
+
+@contexts French
+-(NSString*) address{
+    NSString *query = [NSString stringWithFormat:@"SELECT address FROM Poi WITH language = %@ AND id_poi = %d", @"fr", [self poiId]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
 }
 
 @contexts Dutch
 -(NSString*) name{
-    return [self.names objectForKey:@"nl"];
+    NSString *query = [NSString stringWithFormat:@"SELECT name FROM Poi WITH language = %@ AND id_poi = %d", @"nl", [self poiId]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
 }
 
 @contexts English
 -(NSString*) name{
-    return [self.names objectForKey:@"en"];
+    NSString *query = [NSString stringWithFormat:@"SELECT name FROM Poi WITH language = %@ AND id_poi = %d", @"en", [self poiId]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
 }
 
 @contexts French
 -(NSString*) name{
-    return [self.names objectForKey:@"fr"];
+    NSString *query = [NSString stringWithFormat:@"SELECT name FROM Poi WITH language = %@ AND id_poi = %d", @"fr", [self poiId]];
+    NSArray *res = [[NSArray alloc] initWithArray:[[self dbManager] loadDataFromDB:query]];
+    return [res objectAtIndex:0];
 }
 
 @end

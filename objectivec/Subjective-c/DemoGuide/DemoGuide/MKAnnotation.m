@@ -3,7 +3,6 @@
 //  DemoGuide
 //
 //  Created by Guillaume Kaisin on 02/02/12.
-//  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "MKAnnotation.h"

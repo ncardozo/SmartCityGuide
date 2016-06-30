@@ -3,7 +3,6 @@
 //  DemoGuide
 //
 //  Created by Guillaume Kaisin on 13/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import "ToolsLangViewController.h"

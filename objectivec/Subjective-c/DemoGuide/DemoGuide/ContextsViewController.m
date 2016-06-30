@@ -3,7 +3,6 @@
 //  DemoGuide
 //
 //  Created by Guillaume Kaisin on 13/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import "ContextsViewController.h"
@@ -44,7 +43,7 @@
     DemoGuideAppDelegate * appDelegate = (DemoGuideAppDelegate *)[[UIApplication sharedApplication] delegate];
     self.cacheManager = [appDelegate cacheManager];
     
- Po
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.

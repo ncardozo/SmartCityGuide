@@ -3,7 +3,6 @@
 //  DemoGuide
 //
 //  Created by Guillaume Kaisin on 12/11/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import "SQLManager.h"
@@ -23,12 +22,6 @@
         self.dbName = @"miniDB.sqlite";
     }
     return self;
-}
-
-- (void)dealloc {
-    [dbName release];
-    [dbPath release];
-    [super dealloc];
 }
 
 -(NSMutableArray *) selectDescriptions{
@@ -55,8 +48,6 @@
                 Description * newDesc = [[Description alloc] initWithText:textDico ident:anId poiId:poi_id];
                 
                 [selectedDesc addObject:newDesc];
-                
-                [newDesc release];
             }
         }
         sqlite3_finalize(compiledStatement);        
@@ -105,8 +96,6 @@
                 }
                 poi.imagesDico = imagesDico;
                 [selectedPois addObject:poi];
-                
-                [poi release];
             }
         }
         sqlite3_finalize(compiledStatement);        
@@ -135,8 +124,6 @@
                 CategoryPoi * newCat = [[CategoryPoi alloc] initWithId:anId frName:frName enName:enName nlName:nlName];
                 
                 [selectedCategories addObject:newCat];
-                
-                [newCat release];
             }
         }
         sqlite3_finalize(compiledStatement);        
@@ -225,10 +212,7 @@
                 
                 Itinerary * newItinerary = [[Itinerary alloc] initWithId:anId descriptions:descDico nb:aCount pois:poiIdArray];
                 
-                [selectedItineraries addObject:newItinerary];
-                
-                [newItinerary release];
-            }
+                [selectedItineraries addObject:newItinerary];            }
         }
         sqlite3_finalize(compiledStatement);        
 	}
@@ -251,7 +235,6 @@
                 NSString *aName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
                 NSData * dataForCachedImage = [[NSData alloc] initWithBytes:sqlite3_column_blob(compiledStatement,2) length:sqlite3_column_bytes(compiledStatement,2)];
                 [imagesDico setObject:[UIImage imageWithData:dataForCachedImage] forKey:aName];
-                [dataForCachedImage release];
             }
         }
         sqlite3_finalize(compiledStatement);        
@@ -274,7 +257,6 @@
                 NSString *aName = [NSString stringWithUTF8String:(char *)sqlite3_column_text(compiledStatement, 1)];
                 NSData * dataForCachedImage = [[NSData alloc] initWithBytes:sqlite3_column_blob(compiledStatement,2) length:sqlite3_column_bytes(compiledStatement,2)];
                 [imagesDico setObject:[UIImage imageWithData:dataForCachedImage] forKey:aName];
-                [dataForCachedImage release];
             }
         }
         sqlite3_finalize(compiledStatement);        
@@ -312,8 +294,6 @@
                 Poi * p = [poiById objectForKey:[NSString stringWithFormat:@"%d",poiId]];
                 Schedule * schedule = [[Schedule alloc] initWithWeek:dateArray];
                 p.poiSchedule = schedule;
-                
-                [schedule release];
             }
         }
         sqlite3_finalize(compiledStatement);        

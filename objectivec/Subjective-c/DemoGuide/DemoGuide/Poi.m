@@ -3,7 +3,6 @@
 //  MiniGuide
 //
 //  Created by Guillaume Kaisin on 23/10/11.
-//  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import "Poi.h"
