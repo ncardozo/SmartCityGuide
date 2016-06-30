@@ -138,6 +138,22 @@ DutchPoiStrategy.prototype.getDescription = function() {
 	return res[0];
 };
 
+var KidENPoiStrategy = function() {};
+KidENPoiStrategy.prototype.getDescription = function() {
+		var res = db.runQuery('SELECT description FROM Poi WITH type = KID AND language = EN AND id_poi = %d', this.id);
+};
+
+var KidFRPoiStrategy = function() {};
+KidFRPoiStrategy.prototype.getDescription = function() {
+		var res = db.runQuery('SELECT description FROM Poi WITH type = KID AND language = FR AND id_poi = %d', this.id);
+};
+
+var KidNLPoiStrategy = function() {};
+KidNLPoiStrategy.prototype.getDescription = function() {
+		var res = db.runQuery('SELECT description FROM Poi WITH type = KID AND language = NL AND id_poi = %d', this.id);
+};
+
+
 var Poi = function(id, name, address, description, image, latitude, longitude, category, schedule, strategy) {
 	this.strategy = strategy;
 	this.strategy.setId(id);
@@ -200,6 +216,16 @@ Poi.prototype.distanceBetween = function() {
 
 };
 
+Poi.prototype.print = function() {
+	console.log("POI information");
+	console.log(this.strategy.getId());
+	console.log(this.strategy.getName());
+	console.log(this.strategy.getDescription());
+	console.log(this.strategy.image());
+	console.log(this.strategy.state());
+	console.log(this.strategy.isClosed() ? "Closed" : "Open");
+};
+
 module.exports = {
 	Poi: Poi,
 	PoiStrategy: PoiStrategy,
@@ -209,4 +235,7 @@ module.exports = {
 	DayPoiStrategy: DayPoiStrategy,
 	AfternoonPoiStrategy: AfternoonPoiStrategy,
 	NightPoiStrategy: NightPoiStrategy,
+	KidENPoiStrategy: KidENPoiStrategy,
+	KidFRPoiStrategy: KidFRPoiStrategy,
+	KidNLPoiStrategy: KidNLPoiStrategy,
 };
