@@ -1,6 +1,5 @@
 var DVC = require("./DescriptionViewController.js");
 var POI = require("./poi.js").Poi;
-var CM = require("./ContextManager.js");
 var CATEGORY = require("./category.js");
 var db = require("./DBManager.js");
 
@@ -70,7 +69,6 @@ GuidedTourPoiViewControllerStrategy.prototype.displayPoi = function(poiNumber, i
 
 TimePoiViewControllerStrategy = function() {};
 TimePoiViewControllerStrategy.prototype.displayPoi = function(poiNumber) {
-  CM.updateDate();
   var res = db.runQuery('SELECT * FROM Itinerary WHERE id = %@', this.id);
   var currentPoi = res[poiNumber];
   console.log(currentPoi.print());
@@ -78,7 +76,6 @@ TimePoiViewControllerStrategy.prototype.displayPoi = function(poiNumber) {
 
 KidPoiViewControllerStrategy = function() {};
 KidPoiViewControllerStrategy.prototype.displayPoi = function(poiNumber) {
-  CM.updateAudience("KID");
   var res = db.runQuery('SELECT * FROM Itinerary WHERE id = %@', 1);
   var currentPoi = res[poiNumber];
   console.log(currentPoi.print());
