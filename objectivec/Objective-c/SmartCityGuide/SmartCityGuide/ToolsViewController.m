@@ -5,6 +5,7 @@
 //
 
 #import "ToolsViewController.h"
+#import "POIViewController.h"
 
 @implementation BaseToolsViewController
 - (void) updateDataAction {
@@ -76,7 +77,7 @@
 - (void)viewDidLoad {
     
     self.toolsOption = [[NSArray alloc] initWithObjects:@"Language", @"Categories", @"Time adaptation", @"SimpleInterface", @"Low Memory", @"Low Battery", @"Colored categories", @"Update data",  nil];
-    self.appDelegate = (DemoGuideAppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.appDelegate = (SmartCityGuideAppDelegate *)[[UIApplication sharedApplication] delegate];
     [super viewDidLoad];
     
     self.updateAlert = [[UpdateAlertViewController alloc] init];
@@ -119,15 +120,24 @@
 }
 
 -(void) timeAdaptationToggled{
-    NSString * context = @"TimeAdaptation";
+    NSString * context = @"Time";
+    if([POIViewController getStrategy] != [[NSClassFromString([NSString stringWithFormat:@"BasePOIViewController"])alloc] init]) {
+        [POIViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"POIViewController%@", context])alloc] init]];
+    }
 }
 
 -(void) SimpleInterfaceAdaptationToggled{
-    NSString * context = @"SimpleInterface";
+    NSString * context = @"Simple";
+    if([POIViewController getStrategy] != [[NSClassFromString([NSString stringWithFormat:@"BasePOIViewController"])alloc] init]) {
+        [POIViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"POIViewController%@", context])alloc] init]];
+    }
 }
 
 -(void) MemoryAdaptationToggled{
     NSString * context = @"LowMemory";
+    if([ToolsViewController getStrategy] != [[NSClassFromString([NSString stringWithFormat:@"BaseToolsViewController"])alloc] init]) {
+        [ToolsViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"ToolsViewController%@", context])alloc] init]];
+    }
 }
 
 -(void) BatteryAdaptationToggled{
@@ -232,6 +242,10 @@
         [self updateDataAction];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+}
+
++ (if) getStrategy {
+    return self.strategy;
 }
 
 @end

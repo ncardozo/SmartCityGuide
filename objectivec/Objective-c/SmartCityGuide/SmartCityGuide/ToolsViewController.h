@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DemoGuideAppDelegate.h"
+#import "SmartCityGuideAppDelegate.h"
 #import "ToolsLangViewController.h"
 #import "ToolsCategoriesViewController.h"
 #import "UpdateAlertViewController.h"
@@ -16,7 +16,7 @@
 }
 
 @property (retain, nonatomic) NSArray * toolsOption;
-@property (retain, nonatomic) DemoGuideAppDelegate * appDelegate;
+@property (retain, nonatomic) SmartCityGuideAppDelegate * appDelegate;
 @property (retain, nonatomic) ToolsLangViewController * langView;
 @property (retain, nonatomic) ToolsCategoriesViewController * catView;
 
@@ -46,7 +46,7 @@
 @end
 
 @interface ToolsViewController : BaseToolsViewController {
-    DemoGuideAppDelegate * appDelegate;
+    SmartCityGuideAppDelegate * appDelegate;
     NSArray * toolsOption;
     ToolsLangViewController * langView;
     ToolsCategoriesViewController * catView;
@@ -59,4 +59,5 @@
 -(void) timeAdaptationToggled;
 -(void) updateDataAction;
 +(void) setStrategy: (id) _strategy;
++(id) getStrategy;
 @end

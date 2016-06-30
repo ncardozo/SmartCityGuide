@@ -212,7 +212,7 @@
     [self.descView setupView:p];
 }
 
-- (void)addPOILocations:(NSMutableArray *) poisList{
+- (void) addPOILocations:(NSMutableArray *) poisList{
     [self.annotations removeAllObjects];
     for(Poi * curP in poisList){        
         MKAnnotation *annotationPoint = [[MKAnnotation alloc] initWithPoi:curP];
@@ -248,7 +248,7 @@
     [super viewWillAppear:animated];
 }
 
-- (void)needRefresh:(NSNotification *)notification{
+- (void) needRefresh:(NSNotification *)notification{
     [self updateAnnotations];
     //[[SCContextManager sharedContextManager] deactivateContextWithName:@"RefreshPoiMap"];
 }

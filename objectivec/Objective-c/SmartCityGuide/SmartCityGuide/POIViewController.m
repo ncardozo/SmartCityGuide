@@ -272,6 +272,13 @@
 
 @end
 
+@implementation POIViewControllerSimple
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)index {
+    return 120;
+}
+
+@end
+
 @implementation POIViewController
 @synthesize categoryPoiDict;
 @synthesize tableView, segmentedControl, poiSortList, normalSortList, itiSortList;
@@ -462,4 +469,11 @@
     self.segmentedControl.selectedSegmentIndex = 0;
 }
 
++ (void) setStrategy:(id)_strategy {
+    self.strategy = _strategy;
+}
+
++ (id) getStrategy: {
+    return self.strategy;
+}
 @end

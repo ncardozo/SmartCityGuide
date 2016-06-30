@@ -86,6 +86,8 @@
 @property(assign, nonatomic) CLLocationDistance distFromCurLoc;
 @property(nonatomic) CategoryPoi *categoryPoi;
 
+@property(retain, nonatomic, readwrite) id strategy;
+
 -(id)initWithAddress:(NSDictionary*)addresses latitude:(double)latitude longitude:(double)longitude ident:(int)anId name:(NSDictionary*)namesDico imageUrl:(NSString*)anUrl;
 
 -(BaseDescription *) description;
@@ -99,4 +101,5 @@
 -(BOOL) isClosed;
 
 +(void) setStrategy: (id) _strategy;
++(id) getStrategy;
 @end

@@ -92,6 +92,7 @@
 @implementation Poi
 @synthesize address, latitude, name, poiId, longitude, description, imagePoi, publicPoi, categories;
 @synthesize imagesDico, poiSchedule, distFromCurLoc, categoryPoi;
+@synthesize strategy;
 
 -(id)initWithAddress:(NSString *) newAddress latitude:(double)aLat longitude:(double)aLong ident:(int)anId name:(NSString *) newName imageUrl:(NSString*) anUrl {
     self = [super init];
@@ -163,6 +164,10 @@
 
 + (void) setStrategy:(id)_strategy {
     self.strategy = _strategy;
+}
+
++ (id) getStrategy {
+    return Poi.strategy;
 }
 
 @end

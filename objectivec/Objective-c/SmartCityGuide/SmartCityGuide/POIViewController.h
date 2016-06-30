@@ -95,6 +95,10 @@
 -(NSArray *) poiSortList;
 @end
 
+@interface POIViewControllerSimple : BasePOIViewController
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)index;
+@end
+
 @interface POIViewController : BasePOIViewController {
     NSMutableDictionary * categoryPoiDict;
     
@@ -118,5 +122,6 @@
 - (void)setUpCell:(UITableViewCell*)cell ForPoi:(Poi *)p;
 - (void) resetPoiSortTab;
 + (void) setStrategy: (id) _strategy;
++ (id) getStrategy;
 
 @end
