@@ -8,6 +8,11 @@ MenuViewControllerStrategy.prototype.loadTour = function() {
   throw new Error("A tour strategy must be chosen");
 };
 
+MenuViewControllerStrategy.prototype.loadTour = function() {
+  PVC.PoiViewController.setStrategy(new PVC.PoiViewControllerStrategy());
+  PVC.PoiViewController.displayPoi(1);
+};
+
 var GuidedTourMenuViewControllerStrategy = function() {};
 GuidedTourMenuViewControllerStrategy.prototype.loadTour = function() {
   PVC.PoiViewController.setStrategy(new PVC.GuidedTourPoiViewControllerStrategy());
@@ -41,6 +46,10 @@ MenuViewController.prototype.getStrategy = function() {
 
 MenuViewController.prototype.setStrategy = function(strategy) {
   this.strategy = strategy;
+};
+
+MenuViewController.prototype.loadTour = function() {
+  this.strategy.loadTour();
 };
 
 
