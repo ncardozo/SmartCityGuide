@@ -36,6 +36,10 @@ PoiStrategy.prototype.addCategory = function(cat) {
 	this.category = cat;
 };
 
+PoiStrategy.prototype.getCategory = function() {
+	return this.category;
+};
+
 PoiStrategy.prototype.setState = function(newState) {
 	this.state = newState;
 };
@@ -202,6 +206,10 @@ Poi.prototype.isClosed = function() {
 
 Poi.prototype.addCategory = function(category) {
 	this.strategy.addCategory(category);
+};
+
+Poi.prototype.gerCategory = function() {
+	this.strategy.getCategory();
 };
 
 Poi.prototype.state = function() {
