@@ -66,13 +66,13 @@ function main() {
     console.log(JSON.stringify(answers, null, '  '));
     if(answers.toplevel == "Menu") {
       if(answers.menuOptions == "Time") {
-        POI.Poi.setStrategy(eval("new POI." + answers.language + "Poi.Strategy()"));
+        POI.Poi.setStrategy(eval("new POI." + answers.language + "PoiStrategy()"));
       } else if(answers.menuOptions == "Language") {
-        POI.Poi.setStrategy(eval("new POI." + answers.language + "Poi.Strategy()"));
-        ITINERARY.Itinerary.setStrategy(eval("new ITINERARY." + answers.language + "Itinerary.Strategy()"));
-        CATEGORY.Category.setStrategy(eval("new CATEGORY." + answers.language + "Category.Strategy()"));
-        TOWN.Town.setStrategy(eval("new TOWN." + answers.language + "Town.Strategy()"));
-        GUIDEDVISIT.GuidedVisit.setStrategy(eval("new GUIDEDVISIT." + answers.language + "GuidedVisit.Strategy()"));
+        POI.Poi.setStrategy(eval("new POI." + answers.language + "PoiStrategy()"));
+        ITINERARY.Itinerary.setStrategy(eval("new ITINERARY." + answers.language + "ItineraryStrategy()"));
+        CATEGORY.Category.setStrategy(eval("new CATEGORY." + answers.language + "CategoryStrategy()"));
+        TOWN.Town.setStrategy(eval("new TOWN." + answers.language + "TownStrategy()"));
+        GUIDEDVISIT.GuidedVisit.setStrategy(eval("new GUIDEDVISIT." + answers.language + "GuidedVisitStrategy()"));
       } else if(answers.menuOptions == "Visit Type") {
 
       }
