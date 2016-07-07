@@ -40,5 +40,5 @@ ToolsCategoryViewController.prototype.tableView = function(view, index) {
 module.exports = {
   ToolsCategoryViewController: ToolsCategoryViewController,
   ToolsCategoryViewControllerStrategy: ToolsCategoryViewControllerStrategy,
-
+  ColorToolsCategoryViewControlelrStrategy: ColorToolsCategoryViewControlelrStrategy
 };
