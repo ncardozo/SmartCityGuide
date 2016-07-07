@@ -1,4 +1,3 @@
-var DVC = require("./DescriptionViewController.js");
 var POI = require("./poi.js").Poi;
 var CATEGORY = require("./category.js");
 var db = require("./DBManager.js");

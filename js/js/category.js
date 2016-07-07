@@ -3,6 +3,8 @@ var db = require("./DBManager.js");
 
 var CategoryStrategy = function(iD, color, name) {
 	this.id = iD;
+	this.color = color;
+	this.name = name;
 };
 
 CategoryStrategy.prototype.getId = function() {
@@ -17,12 +19,21 @@ CategoryStrategy.prototype.getColor = function() {
 	return this.color;
 };
 
+CategoryStrategy.prototype.setColor = function(color) {
+	this.color = color;
+};
+
 //--- ADAPTATIONS
 var EnglishCategoryStrategy = function() {};
 EnglishCategoryStrategy.prototype = Object.create(CategoryStrategy.prototype);
 EnglishCategoryStrategy.prototype.getName = function() {
 	var res = db.runQuery('SELECT name FROM Category WHERE language = %@ AND id = ', 'EN', this.id);
 	return res[0];
+};
+
+EnglishCategoryStrategy.prototype.setColor = function(color) {
+	Category.setStrategy(new CategoryStrategy());
+	Category.setColor(color);
 };
 
 var FrenchCategoryStrategy = function() {};
@@ -32,11 +43,21 @@ FrenchCategoryStrategy.prototype.getName = function() {
 	return res[0];
 };
 
+FrenchCategoryStrategy.prototype.setColor = function(color) {
+	Category.setStrategy(new CategoryStrategy());
+	Category.setColor(color);
+};
+
 var DutchCategoryStrategy = function() {};
 DutchCategoryStrategy.prototype = Object.create(CategoryStrategy.prototype);
 DutchCategoryStrategy.prototype.getName = function() {
 	var res = db.runQuery('SELECT name FROM Category WHERE language = %@ AND id = ', 'NL', this.id);
 	return res[0];
+};
+
+DutchCategoryStrategy.prototype.setColor = function(color) {
+	Category.setStrategy(new CategoryStrategy());
+	Category.setColor(color);
 };
 
 //--- BEHAVIOR
