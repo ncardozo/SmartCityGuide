@@ -14,13 +14,13 @@ TPoiOperations = Trait({
 		throw new Error("A language needs to be defined to get the name");
 	},
 	setName: function(nam) {
-		this.name = nam;
+		throw new Error("A language needs to be defined to set the name");
 	},
 	getAddress: function() {
 		throw new Error("A language needs to be specified to get the address");
 	},
 	setAddress: function(addr) {
-		throw new Error("A language needs to be specified to get the address");
+		throw new Error("A language needs to be specified to set the address");
 	},
 	addCategory: function(cat) {
 		this.category = cat;
@@ -71,7 +71,7 @@ function TPoi(nid, name, add, desc, img, lat, long, cat, s) {
 		}));
 }
 
-function Poi(nid, name add, desc, img, lat, longi, cat, s) {
+function Poi(nid, name, add, desc, img, lat, longi, cat, s) {
 	return Object.create(Object.prototype, TPoi(nid, name, add, desc, img, lat, longi, cat, s));
 }
 
@@ -83,21 +83,21 @@ TEnglishPoiOperations = Trait({
 		return res[0];
 	},
 	setName: function(name) {
-		db.runQuery('INSERT INTO Poi (name) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = EN', name, this.id);
+		db.runQuery('INSERT INTO Poi (name) VALUES (%@) SELECT FROM Poi WHERE id_poi = %d AND language = EN', name, this.id);
 	},
 	getDescription: function() {
 		var res = db.runQuery('SELECT description FROM Poi WITH language = %@ AND id_poi = %d', 'EN', this.id);
 		return res[0];
 	},
 	setDescription: function(desc) {
-		db.runQuery('INSERT INTO Poi (description) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = EN', desc, this.id);
+		db.runQuery('INSERT INTO Poi (description) VALUES (%@) SELECT FROM Poi WHERE id_poi = %d AND language = EN', desc, this.id);
 	},
 	getAddress: function() {
 		var res = db.runQuery('SELECT address FROM Poi WITH language = %@ AND id_poi = %d', 'EN', this.id);
 		return res[0];
 	},
 	setAddress: function(address) {
-		db.runQuery('INSERT INTO Poi (address) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = EN', address, this.id);
+		db.runQuery('INSERT INTO Poi (address) VALUES (%@) SELECT FROM Poi WHERE id_poi = %d AND language = EN', address, this.id);
 	}
 });
 
@@ -107,21 +107,21 @@ TFrenchPoiOperations = Trait({
 		return res[0];
 	},
 	setName: function(name) {
-		db.runQuery('INSERT INTO Poi (name) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = FR', name, this.id);
+		db.runQuery('INSERT INTO Poi (name) VALUES (%@) SELECT FROM Poi WHERE id_poi = %d AND language = FR', name, this.id);
 	},
 	getDescription: function() {
 		var res = db.runQuery('SELECT description FROM Poi WITH language = %@ AND id_poi = %d', 'FR', this.id);
 		return res[0];
 	},
 	setDescription: function(desc) {
-		db.runQuery('INSERT INTO Poi (description) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = FR', desc, this.id);
+		db.runQuery('INSERT INTO Poi (description) VALUES (%@) SELECT FROM Poi WHERE id_poi = %d AND language = FR', desc, this.id);
 	},
 	getAddress: function() {
 		var res = db.runQuery('SELECT address FROM Poi WITH language = %@ AND id_poi = %d', 'FR', this.id);
 		return res[0];
 	},
 	setAddress: function(address) {
-		db.runQuery('INSERT INTO Poi (address) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = FR', address, this.id);
+		db.runQuery('INSERT INTO Poi (address) VALUES (%@) SELECT FROM Poi WHERE id_poi = %d AND language = FR', address, this.id);
 	}
 });
 
@@ -131,21 +131,21 @@ TDutchPoiOperations = Trait({
 		return res[0];
 	},
 	setName: function(name) {
-		db.runQuery('INSERT INTO Poi (name) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = NL', name, this.id);
+		db.runQuery('INSERT INTO Poi (name) VALUES (%@) SELECT FROM Poi WHERE id_poi = %d AND language = NL', name, this.id);
 	},
 	getDescription: function() {
 		var res = db.runQuery('SELECT description FROM Poi WITH language = %@ AND id_poi = %d', 'NL', this.id);
 		return res[0];
 	},
 	setDescription: function(desc) {
-		db.runQuery('INSERT INTO Poi (description) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = NL', desc, this.id);
+		db.runQuery('INSERT INTO Poi (description) VALUES (%@) SELECT FROM Poi WHERE id_poi = %d AND language = NL', desc, this.id);
 	},
 	getAddress: function() {
 		var res = db.runQuery('SELECT address FROM Poi WITH language = %@ AND id_poi = %d', 'NL', this.id);
 		return res[0];
 	},
 	setAddress: function(address) {
-		db.runQuery('INSERT INTO Poi (address) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = NL', address, this.id);
+		db.runQuery('INSERT INTO Poi (address) VALUES (%@) SELECT FROM Poi WHERE id_poi = %d AND language = NL', address, this.id);
 	}
 });
 

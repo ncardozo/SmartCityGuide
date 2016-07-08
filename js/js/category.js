@@ -15,6 +15,10 @@ CategoryStrategy.prototype.getName = function() {
 	throw new Error("A language strategy needs to be defined to get the name");
 };
 
+CategoryStrategy.prototype.setName = function() {
+	throw new Error("A language needs to be specified to define the name");
+};
+
 CategoryStrategy.prototype.getColor = function() {
 	return this.color;
 };
@@ -31,9 +35,8 @@ EnglishCategoryStrategy.prototype.getName = function() {
 	return res[0];
 };
 
-EnglishCategoryStrategy.prototype.setColor = function(color) {
-	Category.setStrategy(new CategoryStrategy());
-	Category.setColor(color);
+EnglishCategoryStrategy.prototype.setName = function(name) {
+	db.runQuery('INSERT INTO Category (name) VALUES (%@) SELECT FROM Category WHERE id_poi = %d AND language = EN', name, this.id);
 };
 
 var FrenchCategoryStrategy = function() {};
@@ -43,9 +46,8 @@ FrenchCategoryStrategy.prototype.getName = function() {
 	return res[0];
 };
 
-FrenchCategoryStrategy.prototype.setColor = function(color) {
-	Category.setStrategy(new CategoryStrategy());
-	Category.setColor(color);
+FrenchCategoryStrategy.prototype.setName = function(name) {
+	db.runQuery('INSERT INTO Category (name) VALUES (%@) SELECT FROM Category WHERE id_poi = %d AND language = FR', name, this.id);
 };
 
 var DutchCategoryStrategy = function() {};
@@ -55,9 +57,8 @@ DutchCategoryStrategy.prototype.getName = function() {
 	return res[0];
 };
 
-DutchCategoryStrategy.prototype.setColor = function(color) {
-	Category.setStrategy(new CategoryStrategy());
-	Category.setColor(color);
+DutchCategoryStrategy.prototype.setName = function(name) {
+	db.runQuery('INSERT INTO Category (name) VALUES (%@) SELECT FROM Category WHERE id_poi = %d AND language = NL', name, this.id);
 };
 
 //--- BEHAVIOR
@@ -94,5 +95,5 @@ module.exports = {
 	CategoryStrategy: CategoryStrategy,
 	EnglishCategoryStrategy: EnglishCategoryStrategy,
 	FrenchCategoryStrategy: FrenchCategoryStrategy,
-	DutchItineraryStrategy: DutchItineraryStrategy
+	DutchCategoryStrategy: DutchCategoryStrategy
 };
