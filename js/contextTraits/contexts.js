@@ -1,22 +1,28 @@
 var cop = require("context-traits");
 var POI = require("/.poi.js");
-
+var CATEGORY = require("./category.js");
+var GV = require("./guidedVisit.js");
 
 English = new cop.Context({
 	name: "English"
 });
 English.adapt(POI.TPoiOperations, POI.TPoiEnglishOperations);
-
+English.adapt(CATEGORY.TCategoryOperations, CATEGORY.TEnglishCategoryOperations);
+English.adapt(GV.TGuidedVisitOperations, GV.TEnglishGuidedVisitOperations);
 
 French = new cop.Context({
 	name: "French"
 });
 French.adapt(POI.TPoiOperations, POI.TPoiFrenchOperations);
+French.adapt(CATEGORY.TCategoryOperations, CATEGORY.TFrenchCategoryOperations);
+French.adapt(GV.TGuidedVisitOperations, GV.TFrenchGuidedVisitOperations);
 
 Dutch = new cop.Context({
 	name: "Dutch"
 });
 Dutch.adapt(POI.TPoiOperations, POI.TPoiDutchOperations);
+Dutch.adapt(CATEGORY.TCategoryOperations, CATEGORY.TDutchCategoryOperations);
+Dutch.adapt(GV.TGuidedVisitOperations, GV.TDutchGuidedVisitOperations);
 
 Kid = new cop.Context({
 	name: "Kid"
