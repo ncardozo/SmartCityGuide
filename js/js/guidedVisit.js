@@ -1,4 +1,6 @@
 var ContextManager = require("./contextManager.js");
+var GVMC = require("./guidedVisitMapController");
+var POI = require("./poi.js");
 var db = require("./DBManager.js");
 var user = require("./user.js").User;
 
@@ -92,10 +94,8 @@ GuidedVisitStrategy.prototype.nextPoi = function() {
 };
 
 GuidedVisitStrategy.prototype.cancelItinerary = function() {
- //@TODO
-//	[GuidedVisitMapController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"BaseGuidedVisitMapController"])alloc] init]];
+ 	GVMC.GuidedVisitMapController.setStrategy(new GVMC.GuidedVisitMapControllerStrategy());
 	POI.Poi.setStrategy(new Poi.PoiStrategy());
-//	[POIViewController setStrategy:[[NSClassFromString([NSString stringWithFormat:@"BasePOIViewController"])alloc] init]];
 	this.currentPoi = 0;
 	this.setItinerary();
 	console.log("Choose itinerary");

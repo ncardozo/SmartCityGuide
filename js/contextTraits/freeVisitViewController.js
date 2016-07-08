@@ -1,3 +1,5 @@
+var Trait = require("traits").Trait;
+var cop = require("context-traits");
 var POI = require("./poi.js");
 
 TFreeVisitMapViewControlleroperations = Trait({
