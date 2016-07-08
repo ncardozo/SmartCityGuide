@@ -220,7 +220,7 @@ Poi.prototype.setState = function(state) {
 	this.strategy.setState();
 };
 
-Poi.prototype.distanceBetween = function() {
+Poi.prototype.distanceBetween = function(x, y) {
 
 };
 
