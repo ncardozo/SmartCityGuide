@@ -66,13 +66,14 @@ GuidedTourPoiViewControllerStrategy.prototype.mapView = function(annotation) {
     //Basic properties
     var imgUrl = "number" + annotation.indexIti+1;
     pinView.image = imgUrl;
-    
+
     return pinView;
   }
 };
 
 //ADAPTATIONS
 var GuidedTourGuidedVisitMapControllerStrategy = function() {};
+GuidedTourGuidedVisitMapControllerStrategy.prototype = Object.create(GuidedVisitMapController.prototype);
 GuidedTourGuidedVisitMapControllerStrategy.prototype.checkNearestPoi = function() {
     var currentLocation = mapView.userLocation.location;
     var nearestPoi = null;

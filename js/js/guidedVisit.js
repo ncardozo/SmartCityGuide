@@ -109,7 +109,8 @@ EnglishGuidedVisitStrategy.prototype.setDescription = function(desc) {
 };
 
 EnglishGuidedVisitStrategy.prototype.getDescription = function() {
-	return db.runQuery('SELECT description FROM GuidedVisit WHERE id = %@ AND language = %@', this.id, "EN");
+	var res = db.runQuery('SELECT description FROM GuidedVisit WHERE id = %@ AND language = %@', this.id, "EN");
+	return res[0];
 };
 
 var FrenchGuidedVisitStrategy = function() {};
@@ -119,7 +120,8 @@ FrenchGuidedVisitStrategy.prototype.setDescription = function(desc) {
 };
 
 FrenchGuidedVisitStrategy.prototype.getDescription = function() {
-	return db.runQuery('SELECT description FROM GuidedVisit WHERE id = %@ AND language = %@', this.id, "FR");
+	var res = db.runQuery('SELECT description FROM GuidedVisit WHERE id = %@ AND language = %@', this.id, "FR");
+	return res[0];
 };
 
 var DutchGuidedVisitStrategy = function() {};
@@ -129,7 +131,8 @@ DutchGuidedVisitStrategy.prototype.setDescription = function(desc) {
 };
 
 DutchGuidedVisitStrategy.prototype.getDescription = function() {
-	return db.runQuery('SELECT description FROM GuidedVisit WHERE id = %@ AND language = %@', this.id, "NL");
+	var res = db.runQuery('SELECT description FROM GuidedVisit WHERE id = %@ AND language = %@', this.id, "NL");
+	return res[0];
 };
 
 //--- BEHAVIOR
