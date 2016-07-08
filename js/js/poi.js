@@ -98,14 +98,26 @@ EnglishPoiStrategy.prototype.getName = function() {
 	return res[0];
 };
 
+EnglishPoiStrategy.prototype.setName = function(name) {
+	db.runQuery('INSERT INTO Poi (name) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = EN', name, this.id);
+};
+
 EnglishPoiStrategy.prototype.getAddress = function() {
 	var res = db.runQuery('SELECT address FROM Poi WITH language = %@ AND id_poi = %d', 'EN', this.id);
 	return res[0];
 };
 
+EnglishPoiStrategy.prototype.setAddress = function(address) {
+	db.runQuery('INSERT INTO Poi (address) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = EN', address, this.id);
+};
+
 EnglishPoiStrategy.prototype.getDescription = function() {
 	var res = db.runQuery('SELECT description FROM Poi WITH language = %@ AND id_poi = %d', 'EN', this.id);
 	return res[0];
+};
+
+EnglishPoiStrategy.prototype.setDescription = function(desc) {
+	db.runQuery('INSERT INTO Poi (description) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = EN', desc, this.id);
 };
 
 var FrenchPoiStrategy = function(){};
@@ -115,14 +127,26 @@ FrenchPoiStrategy.prototype.getName = function() {
 	return res[0];
 };
 
+FrenchPoiStrategy.prototype.setName = function(name) {
+	db.runQuery('INSERT INTO Poi (name) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = FR', name, this.id);
+};
+
 FrenchPoiStrategy.prototype.getAddress = function() {
 	var res = db.runQuery('SELECT address FROM Poi WITH language = %@ AND id_poi = %d', 'FR', this.id);
 	return res[0];
 };
 
+FrenchPoiStrategy.prototype.setAddress = function(address) {
+	db.runQuery('INSERT INTO Poi (address) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = FR', address, this.id);
+};
+
 FrenchPoiStrategy.prototype.getDescription = function() {
 	var res = db.runQuery('SELECT description FROM Poi WITH language = %@ AND id_poi = %d', 'FR', this.id);
 	return res[0];
+};
+
+FrenchPoiStrategy.prototype.setDescription = function(desc) {
+	db.runQuery('INSERT INTO Poi (description) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = FR', desc, this.id);
 };
 
 var DutchPoiStrategy = function(){};
@@ -132,9 +156,17 @@ DutchPoiStrategy.prototype.getName = function() {
 	return res[0];
 };
 
+DutchPoiStrategy.prototype.setName = function(name) {
+	db.runQuery('INSERT INTO Poi (name) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = NL', name, this.id);
+};
+
 DutchPoiStrategy.prototype.getAddress = function() {
 	var res = db.runQuery('SELECT address FROM Poi WITH language = %@ AND id_poi = %d', 'NL', this.id);
 	return res[0];
+};
+
+DutchPoiStrategy.prototype.setAddress = function(address) {
+	db.runQuery('INSERT INTO Poi (address) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = NL', address, this.id);
 };
 
 DutchPoiStrategy.prototype.getDescription = function() {
@@ -142,19 +174,26 @@ DutchPoiStrategy.prototype.getDescription = function() {
 	return res[0];
 };
 
+DutchPoiStrategy.prototype.setDescription = function(desc) {
+	db.runQuery('INSERT INTO Poi (description) VALUES (%@) SELECT FROM Poi name WHERE id_poi = %d AND language = NL', desc, this.id);
+};
+
 var KidENPoiStrategy = function() {};
 KidENPoiStrategy.prototype.getDescription = function() {
 		var res = db.runQuery('SELECT description FROM Poi WITH type = KID AND language = EN AND id_poi = %d', this.id);
+		return res[0];
 };
 
 var KidFRPoiStrategy = function() {};
 KidFRPoiStrategy.prototype.getDescription = function() {
 		var res = db.runQuery('SELECT description FROM Poi WITH type = KID AND language = FR AND id_poi = %d', this.id);
+		return res[0];
 };
 
 var KidNLPoiStrategy = function() {};
 KidNLPoiStrategy.prototype.getDescription = function() {
 		var res = db.runQuery('SELECT description FROM Poi WITH type = KID AND language = NL AND id_poi = %d', this.id);
+		return res[0];
 };
 
 
@@ -196,6 +235,14 @@ Poi.prototype.setDescription = function(description) {
 	this.strategy.setDescription(description);
 };
 
+Poi.prototype.getAddress = function() {
+	return this.strategy.getAddress();
+};
+
+Poi.prototype.setAddress = function(addr) {
+	this.strategy.setAddress(addr);
+};
+
 Poi.prototype.image = function() {
 	return this.strategy.getImage();
 };
@@ -229,6 +276,7 @@ Poi.prototype.print = function() {
 	console.log(this.strategy.getId());
 	console.log(this.strategy.getName());
 	console.log(this.strategy.getDescription());
+	console.log(this.strategy.getAddress());
 	console.log(this.strategy.image());
 	console.log(this.strategy.state());
 	console.log(this.strategy.isClosed() ? "Closed" : "Open");
