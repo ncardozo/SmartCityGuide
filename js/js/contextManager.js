@@ -2,6 +2,7 @@ var db = require("./DBManager.js");
 var externalip = require('externalip');
 var geoip = require('geoip-lite');
 var POI = require("./poi.js");
+var CATEGORY = require("./category.js");
 var TVC = require("./toolsViewController.js");
 var PVC = require("./poiViewController.js");
 
@@ -27,12 +28,15 @@ ContextManager.prototype.setLanguage = function(lang) {
 ContextManager.prototype.updateLanguage = function() {
   if(this.currentLanguage == "EN") {
     POI.Poi.setStrategy(new POI.EnglishPoiStrategy());
+    CATEGORY.Category.setStrategy(new CATEGORY.EnglishCategoryStrategy());
     PVC.PoiViewController.setStrategy(new PVC.ENPoiViewControllerStrategy());
   } else if(this.currentLanguage == "FR") {
     POI.Poi.setStrategy(new POI.FrenchPoiStrategy());
+    CATEGORY.Category.setStrategy(new CATEGORY.FrenchCategoryStrategy());
     PVC.PoiViewController.setStrategy(new PVC.FRPoiViewControllerStrategy());
   } else if(this.currentLanguage == "NL") {
     POI.Poi.setStrategy(new POI.DutchPoiStrategy());
+    CATEGORY.Category.setStrategy(new CATEGORY.DutchCategoryStrategy());
     PVC.PoiViewController.setStrategy(new PVC.NLPoiViewControllerStrategy());
   }
 };

@@ -11,13 +11,13 @@ FreeVisitMapViewControllerStrategy.prototype.addPOILocations = function(poisList
     this.annotations = [];
     for(var i=0; i<poisList.length; i++) {
         var annotationPoint = poiList[i];
-      //  [self.mapView addAnnotation:annotationPoint];
         this.annotations.push(annotationPoint);
     }
 };
 
 //ADAPTATIONS
 var ColorFreeVisitMapViewControllerStrategy = function() {};
+ColorFreeVisitMapViewControllerStrategy.prototype = Object.create(FreeVisitMapViewControllerStrategy.prototype);
 ColorFreeVisitMapViewControllerStrategy.prototype.getPinLook = function(poi) {
   var image;
   var category = poi.getCategory();
@@ -36,7 +36,7 @@ ColorFreeVisitMapViewControllerStrategy.prototype.getPinLook = function(poi) {
   return image;
 };
 
-//
+//BEHAVIOR
 var FreeVisitMapViewController = function(strategy) {
   this.strategy = strategy;
 };
