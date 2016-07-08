@@ -17,3 +17,33 @@ Dutch = new cop.Context({
 	name: "Dutch"
 });
 Dutch.adapt(POI.TPoiOperations, POI.TPoiDutchOperations);
+
+KidEnglish = new cop.Context({
+	name: "Kid_EN"
+});
+KidEnglish.adapt(POI.TPoiOperations, POI.TKidEnglishPoiOperations);
+
+KidFrench = new cop.Context({
+	name: "Kid_FR"
+});
+KidFrench.adapt(POI.TPoiOperations, POI.TKidFrenchPoiOperations);
+
+KidDutch = new cop.Context({
+	name: "Kid_NL"
+});
+KidDutch.adapt(POI.TPoiOperations, POI.TKidDutchPoiOperations);
+
+Morning = new cop.Context({
+	name: "Morning"
+});
+Morning.adapt(POI.TPoiOperations, POI.TMorningPoiOperations);
+
+Afternoon = new cop.Context({
+	name: "Afternoon"
+});
+Afternoon.adapt(POI.TPoiOperations, POI.TAfternoonPoiOperations);
+
+Night = new cop.Context({
+	name: "Night"
+});
+Night.adapt(POI.TPoiOperations, POI.TNightPoiOperations);
