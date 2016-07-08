@@ -18,6 +18,10 @@ Dutch = new cop.Context({
 });
 Dutch.adapt(POI.TPoiOperations, POI.TPoiDutchOperations);
 
+Kid = new cop.Context({
+	name: "Kid"
+});
+
 KidEnglish = new cop.Context({
 	name: "Kid_EN"
 });
