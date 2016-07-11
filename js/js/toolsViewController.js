@@ -34,22 +34,26 @@ ToolsViewControllerStrategy.prototype.colorAdaptationToggled = function() {
 
 //ADAPTATIONS
 ToolsViewControllerWifi = function() {};
+ToolsViewControllerWifi.prototype = Object.prototype(ToolsViewControllerStrategy.prototype);
 ToolsViewControllerWifi.prototype.updateDataAction = function() {
     concole.log("Wifi connection available");
 };
 
 ToolsViewController3g = function() {};
+ToolsViewController3g.prototype = Object.prototype(ToolsViewControllerStrategy.prototype);
 ToolsViewController3g.prototype.updateDataAction = function() {
   console.log("3g connection available");
 };
 
 ToolsViewControllerLowMemory = function() {};
+ToolsViewControllerLowMemory.prototype = Object.prototype(ToolsViewControllerStrategy.prototype);
 ToolsViewControllerLowMemory.prototype.updateDataAction = function() {
   console.log("WARNING: The memory on the device is limited");
   POIViewController.PoiViewController.setStrategy(new PoiViewController.LowMemoryPoiViewControllerStrategy());
 };
 
 ToolsViewControllerLowBattery = function() {};
+ToolsViewControllerLowBattery.prototype = Object.prototype(ToolsViewControllerStrategy.prototype);
 ToolsViewControllerLowBattery.prototype.updateDataAction = function() {
   console.log("WARNING: The battery level on this device is low");
 };
