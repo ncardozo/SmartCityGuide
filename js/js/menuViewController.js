@@ -14,6 +14,7 @@ MenuViewControllerStrategy.prototype.loadTour = function() {
 };
 
 var GuidedTourMenuViewControllerStrategy = function() {};
+GuidedTourMenuViewControllerStrategy.prototype = Object.create(MenuViewControllerStrategy.prototype);
 GuidedTourMenuViewControllerStrategy.prototype.loadTour = function() {
   PVC.PoiViewController.setStrategy(new PVC.GuidedTourPoiViewControllerStrategy());
   var res = db.runQuesry('SELECT id FROM Itinerary WHERE user = %@', User.getId());
@@ -31,6 +32,7 @@ GuidedTourMenuViewControllerStrategy.prototype.loadTour = function() {
 };
 
 var FreeVisitMenuViewControllerStrategy = function() {};
+FreeVisitMenuViewControllerStrategy.prototype = Object.create(MenuViewControllerStrategy.prototype);
 FreeVisitMenuViewControllerStrategy.prototype.loadTour = function() {
   PVC.POIViewController.setStrategy(new PVC.PoiViewControllerStrategy());
   PVC.PoiViewController.displayPoi(1);
