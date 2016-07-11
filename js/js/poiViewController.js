@@ -22,42 +22,49 @@ PoiViewStrategy.prototype.displayPoi = function(poiNumber) {
 
 //ADAPTATIONS
 ENGuidedTourPoiViewControllerStrategy = function() {};
+ENGuidedTourPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 ENGuidedTourPoiViewControllerStrategy.prototype.poiSortList = function() {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE language = EN AND id = %d', 1);
   return this.sort(res[0]);
 };
 
 FRGuidedTourPoiViewControllerStrategy = function() {};
+FRGuidedTourPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 FRGuidedTourPoiViewControllerStrategy.prototype.poiSortList = function() {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE language = FR AND id = %d', 1);
   return this.sort(res[0]);
 };
 
 NLGuidedTourPoiViewControllerStrategy = function() {};
+NLGuidedTourPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 NLGuidedTourPoiViewControllerStrategy.prototype.poiSortList = function() {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE language = NL AND id = %d', 1);
   return this.sort(res[0]);
 };
 
 ENPoiViewControllerStrategy = function() {};
+ENPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 ENPoiViewControllerStrategy.prototype.poiSortList = function() {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE language = EN AND id = %d', 1);
   return res[0];
 };
 
 FRPoiViewControllerStrategy = function() {};
+FRPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 FRPoiViewControllerStrategy.prototype.poiSortList = function() {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE language = FR AND id = %d', 1);
   return res[0];
 };
 
 NLPoiViewControllerStrategy = function() {};
+NLPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 NLPoiViewControllerStrategy.prototype.poiSortList = function() {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE language = NL AND id = %d', 1);
   return res[0];
 };
 
 GuidedTourPoiViewControllerStrategy = function() {};
+GuidedTourPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 GuidedTourPoiViewControllerStrategy.prototype.displayPoi = function(poiNumber, itinerary) {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE id = %@', itinerary);
   var currentPoi = res[poiNumber];
@@ -67,6 +74,7 @@ GuidedTourPoiViewControllerStrategy.prototype.displayPoi = function(poiNumber, i
 };
 
 TimePoiViewControllerStrategy = function() {};
+TimePoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 TimePoiViewControllerStrategy.prototype.displayPoi = function(poiNumber) {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE id = %@', this.id);
   var currentPoi = res[poiNumber];
@@ -74,6 +82,7 @@ TimePoiViewControllerStrategy.prototype.displayPoi = function(poiNumber) {
 };
 
 KidPoiViewControllerStrategy = function() {};
+KidPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 KidPoiViewControllerStrategy.prototype.displayPoi = function(poiNumber) {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE id = %@', 1);
   var currentPoi = res[poiNumber];
@@ -81,13 +90,16 @@ KidPoiViewControllerStrategy.prototype.displayPoi = function(poiNumber) {
 };
 
 SimplePoiViewControllerStrategy = function() {};
+SimplePoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 SimplePoiViewControllerStrategy.prototype.displayPoi = function() {
   console.log("Simple Poi display");
 };
 
 LowMemoryPoiViewControllerStrategy = function() {};
+LowMemoryPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 
 ColoredCategoriesPoiViewControllerStrategy = function() {};
+ColoredCategoryPoiViewControllerStrategy.prototype = Object.create(PoiViewControllerStrategy.prototype);
 ColoredCategoriesPoiViewControllerStrategy.prototype.displayPoi = function(poiNumber, itinerary) {
   var res = db.runQuery('SELECT * FROM Itinerary WHERE id = %@', itinerary);
   var caegories = db.runQuery('SELECT * FROM Category');
