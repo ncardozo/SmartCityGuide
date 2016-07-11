@@ -10,3 +10,4 @@
 (defcontext @night)
 (defcontext @guided-tour)
 (defcontext @free-visit)
+(defcontext @kid)
