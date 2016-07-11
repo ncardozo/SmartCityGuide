@@ -1,5 +1,4 @@
 var Trait = require("traits").Trait;
-var cop = require("context-traits");
 var db = require("./DBManager.js");
 
 TScheduleOperations = Trait({
