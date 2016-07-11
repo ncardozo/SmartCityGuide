@@ -52,7 +52,6 @@ ContextManager.prototype.updateAudience = function(audience) {
 ContextManager.prototype.updateDate = function() {
   this.currentDay = new Date();
   var hour = this.currentDay.getHours();
-  PVC.PoiViewController.setStrategy(new PVC.TimePoiViewControllerStrategy());
   if(hour < 12) {
     Morning.activate();
   } else if(hour < 18) {

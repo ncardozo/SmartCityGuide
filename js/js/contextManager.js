@@ -3,6 +3,7 @@ var externalip = require('externalip');
 var geoip = require('geoip-lite');
 var POI = require("./poi.js");
 var CATEGORY = require("./category.js");
+var ITINERARY =  require("./itinerary.js");
 var TVC = require("./toolsViewController.js");
 var PVC = require("./poiViewController.js");
 
@@ -29,14 +30,17 @@ ContextManager.prototype.updateLanguage = function() {
   if(this.currentLanguage == "EN") {
     POI.Poi.setStrategy(new POI.EnglishPoiStrategy());
     CATEGORY.Category.setStrategy(new CATEGORY.EnglishCategoryStrategy());
+    ITINERARY.Itinerary.setStrategy(new ITINERARY.EnglishItineraryStrategy());
     PVC.PoiViewController.setStrategy(new PVC.ENPoiViewControllerStrategy());
   } else if(this.currentLanguage == "FR") {
     POI.Poi.setStrategy(new POI.FrenchPoiStrategy());
     CATEGORY.Category.setStrategy(new CATEGORY.FrenchCategoryStrategy());
+    ITINERARY.Itinerary.setStrategy(new ITINERARY.FrenchItineraryStrategy());
     PVC.PoiViewController.setStrategy(new PVC.FRPoiViewControllerStrategy());
   } else if(this.currentLanguage == "NL") {
     POI.Poi.setStrategy(new POI.DutchPoiStrategy());
     CATEGORY.Category.setStrategy(new CATEGORY.DutchCategoryStrategy());
+    ITINERARY.Itinerary.setStrategy(new ITINERARY.DutchItineraryStrategy());
     PVC.PoiViewController.setStrategy(new PVC.NLPoiViewControllerStrategy());
   }
 };
@@ -53,6 +57,8 @@ ContextManager.prototype.updateAudience = function(audience) {
     }
   } else {
     POI.Poi.setStrategy(new POI.PoiStrategy());
+    CATEGORY.Category.setStrategy(new CATEGORY.CategoryStrategy());
+    ITINERARY.Itinerary.setStrategy(new ITINERARY.ItineraryStrategy());
     PVC.PoiViewController.setStrategy(new PVC.PoiViewControllerStrategy());
   }
 };
