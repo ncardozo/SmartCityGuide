@@ -53,7 +53,7 @@ GuidedVisitMapControllerStrategy.prototye.addPoiAnnotations = function() {
   }
 };
 
-GuidedTourPoiViewControllerStrategy.prototype.mapView = function(annotation) {
+GuidedVisitMapControllerStrategy.prototype.mapView = function(annotation) {
   if(typeof annotation === MKUserLocation){
     return null;
   } else {

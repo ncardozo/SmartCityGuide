@@ -3,9 +3,11 @@ var externalip = require('externalip');
 var geoip = require('geoip-lite');
 var POI = require("./poi.js");
 var CATEGORY = require("./category.js");
+var TOWN = require("./town.js");
 var ITINERARY =  require("./itinerary.js");
 var TVC = require("./toolsViewController.js");
 var PVC = require("./poiViewController.js");
+var GUIDEDVISIT = require("./guidedVisit.js");
 
 var ContextManager = function() {
   this.currentLocation = [];
@@ -31,17 +33,23 @@ ContextManager.prototype.updateLanguage = function() {
     POI.Poi.setStrategy(new POI.EnglishPoiStrategy());
     CATEGORY.Category.setStrategy(new CATEGORY.EnglishCategoryStrategy());
     ITINERARY.Itinerary.setStrategy(new ITINERARY.EnglishItineraryStrategy());
+    TOWN.Town.setStrategy(new TOWN.EnglishTownStrategy());
     PVC.PoiViewController.setStrategy(new PVC.ENPoiViewControllerStrategy());
+    GUIDEDVISIT.GuidedVisit.setStrategy(new GUIDEDVISIT.EnglishGuidedVisitStrategy());
   } else if(this.currentLanguage == "FR") {
     POI.Poi.setStrategy(new POI.FrenchPoiStrategy());
     CATEGORY.Category.setStrategy(new CATEGORY.FrenchCategoryStrategy());
     ITINERARY.Itinerary.setStrategy(new ITINERARY.FrenchItineraryStrategy());
+    TOWN.Town.setStrategy(new TOWN.FrenchTownStrategy());
     PVC.PoiViewController.setStrategy(new PVC.FRPoiViewControllerStrategy());
+    GUIDEDVISIT.GuidedVisit.setStrategy(new GUIDEDVISIT.FrenchGuidedVisitStrategy());
   } else if(this.currentLanguage == "NL") {
     POI.Poi.setStrategy(new POI.DutchPoiStrategy());
     CATEGORY.Category.setStrategy(new CATEGORY.DutchCategoryStrategy());
     ITINERARY.Itinerary.setStrategy(new ITINERARY.DutchItineraryStrategy());
+    TOWN.Town.setStrategy(new TOWN.DutchTownStrategy());
     PVC.PoiViewController.setStrategy(new PVC.NLPoiViewControllerStrategy());
+    GUIDEDVISIT.GuidedVisit.setStrategy(new GUIDEDVISIT.DutchGuidedVisitStrategy());
   }
 };
 

@@ -2,6 +2,7 @@ var cop = require("context-traits");
 var POI = require("/.poi.js");
 var CATEGORY = require("./category.js");
 var ITINERARY = require("./itinerary.js");
+var TOWN = require("./town.js");
 var GV = require("./guidedVisit.js");
 
 English = new cop.Context({
@@ -10,6 +11,7 @@ English = new cop.Context({
 English.adapt(POI.TPoiOperations, POI.TPoiEnglishOperations);
 English.adapt(CATEGORY.TCategoryOperations, CATEGORY.TEnglishCategoryOperations);
 English.adapt(ITINERARY.TItineraryOperations, ITINERARY.TEnglishItineraryOperations);
+English.adapt(TOWN.TTownOperations, TOWN.TEnglishTownOperations);
 English.adapt(GV.TGuidedVisitOperations, GV.TEnglishGuidedVisitOperations);
 
 French = new cop.Context({
@@ -18,6 +20,7 @@ French = new cop.Context({
 French.adapt(POI.TPoiOperations, POI.TPoiFrenchOperations);
 French.adapt(CATEGORY.TCategoryOperations, CATEGORY.TFrenchCategoryOperations);
 French.adapt(ITINERARY.TItineraryOperations, ITINERARY.TFrenchItineraryOperations);
+French.adapt(TOWN.TTownOperations, TOWN.TFrenchTownOperations);
 French.adapt(GV.TGuidedVisitOperations, GV.TFrenchGuidedVisitOperations);
 
 Dutch = new cop.Context({
@@ -26,6 +29,7 @@ Dutch = new cop.Context({
 Dutch.adapt(POI.TPoiOperations, POI.TPoiDutchOperations);
 Dutch.adapt(CATEGORY.TCategoryOperations, CATEGORY.TDutchCategoryOperations);
 Dutch.adapt(ITINERARY.TItineraryOperations, ITINERARY.TDutchItineraryOperations);
+Dutch.adapt(TOWN.TTownOperations, TOWN.TDutchTownOperations);
 Dutch.adapt(GV.TGuidedVisitOperations, GV.TDutchGuidedVisitOperations);
 
 Kid = new cop.Context({
