@@ -12,6 +12,7 @@ ToolsCategoryViewControllerStrategy.prototye.tableView = function(view, index) {
 
 //ADAPTATIONS
 var ColorToolsCategoryViewControlelrStrategy = function() {};
+ColorToolsCategoryViewControlelrStrategy.prototype = Object.create(ToolsCategoryViewControllerStrategy.prototype);
 ColorToolsCategoryViewControlelrStrategy.prototye.tableView = function(view, index) {
   var category = categoryList[index];
 
