@@ -40,6 +40,10 @@ EnglishItineraryStrategy.prototype.getDescription = function() {
 	return res[0];
 };
 
+EnglishItineraryStrategy.prototype.setDescription = function(desc) {
+	db.runQuery('INSERT INTO Itinerary (description) VALUES (%@) SELECT FROM Itinerary WHERE id_itinerary = %d AND language = EN', desc, this.id);
+};
+
 var FrenchItineraryStrategy = function() {};
 FrenchItineraryStrategy.prototype = Object.create(ItineraryStrategy.prototype);
 FrenchItineraryStrategy.prototype.getDescription = function() {
@@ -47,11 +51,19 @@ FrenchItineraryStrategy.prototype.getDescription = function() {
 	return res[0];
 };
 
+FrenchtineraryStrategy.prototype.setDescription = function(desc) {
+	db.runQuery('INSERT INTO Itinerary (description) VALUES (%@) SELECT FROM Itinerary WHERE id_itinerary = %d AND language = FR', desc, this.id);
+};
+
 var DutchItineraryStrategy = function() {};
 DutchItineraryStrategy.prototype = Object.create(ItineraryStrategy.prototype);
 DutchItineraryStrategy.prototype.getDescription = function() {
 	var res = db.runQuery('SELECT description FROM Itinerary WHERE language = %@ AND id = %d', 'NL', this.id);
 	return res[0];
+};
+
+DutchtineraryStrategy.prototype.setDescription = function(desc) {
+	db.runQuery('INSERT INTO Itinerary (description) VALUES (%@) SELECT FROM Itinerary WHERE id_itinerary = %d AND language = NL', desc, this.id);
 };
 
 //--- BEHAVIOR
