@@ -66,13 +66,208 @@
 ;;ADAPTATIONS
 (with-context (@english)
 	(defmethod name ((poi @poi))
-		(sql-select :columns (list (sql-all-columns))
+		(sql-select :columns (list "name")
 		            :tables (list "Poi")
 					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
 					                                     :right (sql-identifier :name "EN"))))
+
 	(defmethod set-name ((poi @poi) (n))
-		(sql-insert :table "poi"
-		            :columns (list "name")
-		            :values (list n)))
-)	
+			(sql-update :table "poi"
+	              		:columns (list "name")
+	              		:values (list n)
+						:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "EN"))))
+		
+	(defmethod description ((poi @poi))
+		(sql-select :columns (list "description")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "EN"))))
+
+	(defmethod set-description ((poi @poi) (d))
+		(sql-select :columns (list "description")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "EN"))))
 	
+	(defmethod address ((poi @poi))
+		(sql-select :columns (list "address")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+		                                     	:right (sql-identifier :name "EN"))))
+
+	(defmethod set-address ((poi @poi) (a))
+		(sql-update :table "poi"
+	              	:columns (list "address")
+	              	:values (list a)
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "EN"))))
+)
+
+(with-context (@french)
+	(defmethod name ((poi @poi))
+		(sql-select :columns (list "name")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "FR"))))
+
+	(defmethod set-name ((poi @poi) (n))
+		(sql-update :table "poi"
+              		:columns (list "name")
+              		:values (list n)
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				                                     :right (sql-identifier :name "FR"))))
+		
+	(defmethod description ((poi @poi))
+		(sql-select :columns (list "description")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "FR"))))
+
+	(defmethod set-description ((poi @poi) (d))
+		(sql-select :columns (list "description")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "FR"))))
+	
+	(defmethod address ((poi @poi))
+		(sql-select :columns (list "address")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+		                                     	:right (sql-identifier :name "FR"))))
+
+	(defmethod set-address ((poi @poi) (a))
+		(sql-update :table "poi"
+	              	:columns (list "address")
+	              	:values (list a)
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "FR"))))
+)	
+
+(with-context (@dutch)
+	(defmethod name ((poi @poi))
+		(sql-select :columns (list "name")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "NL"))))
+
+	(defmethod set-name ((poi @poi) (n))
+		(sql-update :table "poi"
+              		:columns (list "name")
+              		:values (list n)
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				                                     :right (sql-identifier :name "NL"))))
+		
+	(defmethod description ((poi @poi))
+		(sql-select :columns (list "description")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "NL"))))
+
+	(defmethod set-description ((poi @poi) (d))
+		(sql-update :table "poi"
+	              	:columns (list "description")
+	              	:values (list d)
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "NL"))))
+	
+	(defmethod address ((poi @poi))
+		(sql-select :columns (list "address")
+		            :tables (list "Poi")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+		                                     	:right (sql-identifier :name "NL"))))
+
+	(defmethod set-address ((poi @poi) (a))
+		(sql-update :table "poi"
+	              	:columns (list "address")
+	              	:values (list a)
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "NL"))))
+)
+
+(with-context (@kid @english)
+	(defmethod description ((poi @poi))
+		(sql-select :columns (list "description")
+		            :tables (list "Poi")
+					:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
+															:right (sql-identifier :name "Kid")) 
+								(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "EN")))))
+
+	(defmethod set-description ((poi @poi) (d))
+		(sql-update :table "poi"
+	              	:columns (list "description")
+	              	:values (list d)
+					:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
+															:right (sql-identifier :name "Kid")) 
+								(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+						                                     :right (sql-identifier :name "EN")))))
+)
+
+(with-context (@kid @french)
+	(defmethod description ((poi @poi))
+		(sql-select :columns (list "description")
+		            :tables (list "Poi")
+					:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
+															:right (sql-identifier :name "Kid")) 
+								(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "FR")))))
+
+	(defmethod set-description ((poi @poi) (d))
+		(sql-update :table "poi"
+	              	:columns (list "description")
+	              	:values (list d)
+					:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
+															:right (sql-identifier :name "Kid")) 
+								(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+						                                     :right (sql-identifier :name "FR")))))
+)
+
+(with-context (@kid @dutch)
+	(defmethod description ((poi @poi))
+		(sql-select :columns (list "description")
+		            :tables (list "Poi")
+					:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
+															:right (sql-identifier :name "Kid")) 
+								(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "NL")))))
+
+	(defmethod set-description ((poi @poi) (d))
+		(sql-update :table "poi"
+	              	:columns (list "description")
+	              	:values (list d)
+					:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
+															:right (sql-identifier :name "Kid")) 
+								(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+						                                     :right (sql-identifier :name "NL")))))
+)
+
+(with-context (@morning)
+	(defmethod image ((poi @poi))
+		(sql-update :table "Poi"
+	              	:columns (list "image")
+					:where (and (sql-binary-operator :name '= :left (sql-identifier :name "poi_id")
+															:right (sql-identifier :name (id poi))) 
+								(sql-binary-operator :name '= :left (sql-identifier :name "time")
+						                                     :right (sql-identifier :name "Morning")))))
+)
+
+(with-context (@afternoon)
+	(defmethod image ((poi @poi))
+		(sql-update :table "Poi"
+	              	:columns (list "image")
+					:where (and (sql-binary-operator :name '= :left (sql-identifier :name "poi_id")
+															:right (sql-identifier :name (id poi))) 
+								(sql-binary-operator :name '= :left (sql-identifier :name "time")
+						                                     :right (sql-identifier :name "Afternoon")))))
+)	
+
+(with-context (@night)
+	(defmethod image ((poi @poi))
+		(sql-update :table "Poi"
+	              	:columns (list "image")
+					:where (and (sql-binary-operator :name '= :left (sql-identifier :name "poi_id")
+															:right (sql-identifier :name (id poi))) 
+								(sql-binary-operator :name '= :left (sql-identifier :name "time")
+						                                     :right (sql-identifier :name "Night")))))
+)
