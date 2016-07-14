@@ -14,7 +14,6 @@
 	 longitude
 	 latitude))
 	
-	
 (defun base-description-strategy ((poi @poi))
 	(error 'language-error :text "A language needs to be defined to get the description"))
 	
