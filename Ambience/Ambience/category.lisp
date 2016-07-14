@@ -37,3 +37,33 @@
 						:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
 					                                     :right (sql-identifier :name "EN"))))
 )
+
+(with-context (@french)
+	(defmethod name ((category @category))
+		(sql-select :columns (list "name")
+		            :tables (list "Category")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "FR"))))
+
+	(defmethod set-name ((category @category) (n))
+			(sql-update :table "Category"
+	              		:columns (list "name")
+	              		:values (list n)
+						:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "FR"))))
+)
+
+(with-context (@dutch)
+	(defmethod name ((category @category))
+		(sql-select :columns (list "name")
+		            :tables (list "Category")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "NL"))))
+
+	(defmethod set-name ((category @category) (n))
+			(sql-update :table "Category"
+	              		:columns (list "name")
+	              		:values (list n)
+						:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "NL"))))
+)
