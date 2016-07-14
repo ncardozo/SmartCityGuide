@@ -7,6 +7,7 @@ var GuidedVisitMapControllerStrategy = function() {
   this.itineraryList = [];
   this.currentItinerary = null;
   this.mapView = null;
+  this.currentPoi = 0;
 };
 
 GuidedVisitMapControllerStrategy.prototype.nextPoi = function() {
@@ -124,7 +125,7 @@ GuidedTourGuidedVisitMapControllerStrategy.prototype.mapView = function(annotati
     }
 };
 
-//
+//BEHAVIOR
 var GuidedVisitMapController = function(s) {
   this.strategy = s;
 };

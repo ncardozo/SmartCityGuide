@@ -119,7 +119,8 @@ function TGuidedVisitMapController() {
   return Trait.compose(TGuidedVisitMapControllerOperations, Trait({
     itineraryList: [],
     currentItinerary: null,
-    mapView: null
+    mapView: null,
+    currentPoi: 0
   }));
 }
 
