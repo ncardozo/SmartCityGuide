@@ -11,3 +11,5 @@
 (defcontext @guided-tour)
 (defcontext @free-visit)
 (defcontext @kid)
+(defcontext @wifi)
+(defcontext @cellular)
