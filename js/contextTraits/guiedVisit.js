@@ -19,7 +19,7 @@ TGuidedVisitOperations = Trait({
   		else
   			console.log("no choice of itinerary option is displayed");
   },
-  updateItineraries: function() {
+  updateItineraries: function(itineraryList) {
   	this.itineraryList =  itineraryList;
   },
   addPoiAnnotations: function() {
