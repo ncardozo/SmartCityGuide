@@ -87,6 +87,7 @@
 	(defmethod set-description ((poi @poi) (d))
 		(sql-select :columns (list "description")
 		            :tables (list "Poi")
+					:values (list d)
 					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
 					                                     :right (sql-identifier :name "EN"))))
 	

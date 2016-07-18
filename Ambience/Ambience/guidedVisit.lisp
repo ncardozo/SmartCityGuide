@@ -2,7 +2,7 @@
 (defpackage #:scg (:use #:amos-cl))
 (in-package #:scg)
 
-(defproto @guidedVisit ())
+(defproto @guidedVisit (clone @object))
 (add-slot @guidedVisit id -1)
 (add-slot @guidedVisit itineraryList ())
 (add-slot @guidedVisit description "")
