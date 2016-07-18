@@ -45,3 +45,63 @@
 					(t) (defvar *curDistance* (distance-between poi *location*))
 						(cond ((< *curDistance* *minDistance*) (setf *nearesPoi* poi)
 																(setf *minDistance* *curDistance*)))))))
+																
+(defmethod refresh-annotations ((gv @guidedVisit))
+	(add-poi-annotations gv))
+	
+(defmethod next-poi ((gv @guidedVisit))
+	(defvar *pois* (get-itinerary-pois currentItinerary))
+	(cond ((eq currentItinerary (last *pois*)) (cancel-itinerary gv))
+			((t) (setf currentPoi (1+ currentPoi))
+				(refresh-annotations gv))))
+
+(defmethod cancel-itinerary ((gv @guidedVisit))
+	(setf currentItinerary 0)
+	(set-itinerary gv)
+	(format t "Choose itinerary"))
+	
+;;ADAPTATIONS
+(with-context (@englis)
+	(defmethod description ((gv @guidedVisit))
+		(sql-select :columns (list "description")
+		            :tables (list "GuidedVisit")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "EN"))))
+					
+	(defmethod set-description ((gv @guidedVisit) (description))
+		(sql-update :table "GuidedVisit"
+              		:columns (list "description")
+              		:values (list description)
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				                                     :right (sql-identifier :name "EN"))))
+)
+
+(with-context (@french)
+	(defmethod description ((gv @guidedVisit))
+		(sql-select :columns (list "description")
+		            :tables (list "GuidedVisit")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "FR"))))
+					
+	(defmethod set-description ((gv @guidedVisit) (description))
+		(sql-update :table "GuidedVisit"
+              		:columns (list "description")
+              		:values (list description)
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				                                     :right (sql-identifier :name "FR"))))
+)
+
+(with-context (@dutch)
+	(defmethod description ((gv @guidedVisit))
+		(sql-select :columns (list "description")
+		            :tables (list "GuidedVisit")
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+					                                     :right (sql-identifier :name "NL"))))
+					
+	(defmethod set-description ((gv @guidedVisit) (description))
+		(sql-update :table "GuidedVisit"
+              		:columns (list "description")
+              		:values (list description)
+					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				                                     :right (sql-identifier :name "NL"))))
+)

@@ -252,4 +252,4 @@
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "poi_id")
 														:right (sql-identifier :name (id poi))) 
 							(sql-binary-operator :name '= :left (sql-identifier :name "time")
-					                                     :right (sql-identifier :name "Night")))))
+					                                     :right (sql-identifier :name "Night"))))
