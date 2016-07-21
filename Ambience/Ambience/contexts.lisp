@@ -13,3 +13,7 @@
 (defcontext @kid)
 (defcontext @wifi)
 (defcontext @cellular)
+(defcontext @time)
+(defcontext @color)
+(defcontext @lowMemory)
+(defcontext @lowBattery)
