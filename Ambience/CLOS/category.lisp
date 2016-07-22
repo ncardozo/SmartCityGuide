@@ -30,11 +30,11 @@
 				                                     :right (sql-identifier :name "EN"))))
 
 (defun english-set-name-strategy ((category @category) (n))
-		(sql-update :table "Category"
-              		:columns (list "name")
-              		:values (list n)
-					:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
-					                                     :right (sql-identifier :name "EN"))))
+	(sql-update :table "Category"
+           		:columns (list "name")
+           		:values (list n)
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				                                     :right (sql-identifier :name "EN"))))
 
 (defun french-name-strategy ((category @category))
 	(sql-select :columns (list "name")

@@ -13,5 +13,6 @@
 ;;ADAPTATONS
 (defun color-table-view-strategy ((tcvc @toolsCategoryViewController) (index))
 	(defvar *category* (nth index categories))
-	(format t "~d" (get-name *category*))
+	(defvar *fun-name* (format nil "~dname-strategy" *lang-context*))
+	(format t "~d" (funcall (intern *fun-name* *category*)))
 	(format t "Category color ~d" (color *category*)))

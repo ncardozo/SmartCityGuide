@@ -20,4 +20,5 @@
 	(cond ((eq *category* "Culture") (setf *image* "green_pin"))
 		((eq *category* "Diversion") (setf *image* "blue_pin"))
 		((eq *category* "Shopping") (setf *image* "pink_pin"))
-		((t) (setf *image* "yello_pin"))))
+		((t) (setf *image* "yello_pin")))
+	*image*)

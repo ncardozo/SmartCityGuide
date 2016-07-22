@@ -31,8 +31,13 @@
 			
 (defun base-set-itinerary-strategy ((gv @guidedVisit) (id))
 	(defvar *iti* nil)
+	(defvar *fun-set-description* (format nil "~dset-description-strategy" *lang-context*))
+	(defvar *fun-description* (format nil "~ddescription-strategy" *lang-context*))
+	(defvar *fun-kidslang-set-description* (format nil "~dset-description-strategy" *kidslang-context*))
+	(defvar *fun-kidslang-description* (format nil "~ddescription-strategy" *kidslang-context*))
 	(cond ((nilp (get-pos itineraryList id)) (setf *iti* (get-pos itineraryList id)))
-		((t) (set-description strategy (get-description *iti*))
+		((t) (if (eq *kid-context* "kid-") (funcall (intern *fun-kidslang-set-description* (funcall (intenrn *fun-kidslang-description* *iti*)))) 
+										(funcall (intern *fun-set-description* (funcall (intern *fun-description* *iti*)))))
 			(format t "Itinerary count~d/~d" (1+ currentItinerary) (count itineraryList)))))
 			
 (defun base-check-nearest-poi-strategy ((gv @guidedVisit) (user @user))

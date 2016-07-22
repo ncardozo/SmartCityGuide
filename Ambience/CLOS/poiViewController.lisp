@@ -17,10 +17,10 @@
 				:where (sql-binary-operator :name '= :left (sql-identifier :name "id")
 				                                     :right (sql-identifier :name id))))
 	(loop for poi in *pois*
-		do ((format t "~d" (print poi)))))
+		do ((format t "~d" (base-print-strategy poi)))))
 		
 ;;ADAPTATIONS
-(defun englishpoi-sort-list-strategy ((pvc @poiViewController))
+(defun english-poi-sort-list-strategy ((pvc @poiViewController))
 	(sql-select :columns (list "*")
 	            :tables (list "Itinerary")
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "language")
@@ -28,7 +28,7 @@
 							(sql-binary-operator :name '= :left (sql-identifier :name "id")														                                     	
 														:right (sql-identifier :name id)))))
 
-(defun poi-sort-list-strategy ((pvc @poiViewController))
+(defun french-poi-sort-list-strategy ((pvc @poiViewController))
 	(sql-select :columns (list "*")
 	            :tables (list "Itinerary")
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "language")
@@ -36,7 +36,7 @@
 							(sql-binary-operator :name '= :left (sql-identifier :name "id")
                                      					:right (sql-identifier :name id)))))
 
-(defun poi-sort-list-strategy ((pvc @poiViewController))
+(defun dutch-poi-sort-list-strategy ((pvc @poiViewController))
 	(sql-select :columns (list "*")
 	            :tables (list "Itinerary")
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "language")
@@ -44,21 +44,21 @@
 							(sql-binary-operator :name '= :left (sql-identifier :name "id")
 					                                     :right (sql-identifier :name id)))))
 
-(defun display-poi-strategy ((pvc @poiViewController))
+(defun guidedTour-display-poi-strategy ((pvc @poiViewController))
 	(defvar *pois* (sql-select :columns (list "*")
 		            :tables (list "Itinerary")
 					:where (sql-binary-operator :name '= :left (sql-identifier :name "id")
 					                                     :right (sql-identifier :name id))))
 	(loop for poi in *pois*
-		do ((format t "~d" (print poi))
+		do ((format t "~d" (guidedTour-print-strategy poi))
 			(format t "NEXT POI"))))
 
-(defun display-poi-strategy ((pvc @poiViewController))
+(defun time-display-poi-strategy ((pvc @poiViewController))
 	(format t "Time Adaptation")
 	(loop for poi in *pois*
-		do ((format t "~d" (print poi)))))
+		do ((format t "~d" (time-print-strategy poi)))))
 
-(defun display-poi-strategy ((pvc @poiViewController))
+(defun kid-display-poi-strategy ((pvc @poiViewController))
 	(format t "Kid Adaptation")
 	(loop for poi in *pois*
-		do ((format t "~d" (print poi)))))
+		do ((format t "~d" (kids-print-strategy poi)))))

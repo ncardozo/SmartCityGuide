@@ -12,3 +12,4 @@
 (defvar *color-context* "base-")
 (defvar *memory-context* "base-")
 (defvar *battery-context* "base-")
+(defvar *kidslang-context* "base-")
