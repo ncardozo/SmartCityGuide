@@ -73,116 +73,116 @@
 (defun english-name-strategy ((poi @poi))
 	(sql-select :columns (list "name")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "EN"))))
 
 (defun english-set-name-strategy ((poi @poi) (n))
 			(sql-update :table "poi"
 	              		:columns (list "name")
 	              		:values (list n)
-						:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+						:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 					                                     :right (sql-identifier :name "EN"))))
 		
 (defun english-description-strategy ((poi @poi))
 	(sql-select :columns (list "description")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "EN"))))
 
 (defun english-set-description-strategy ((poi @poi) (d))
 	(sql-select :columns (list "description")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "EN"))))
 	
 (defun englihs-address-strategy ((poi @poi))
 	(sql-select :columns (list "address")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 	                                     	:right (sql-identifier :name "EN"))))
 
 (defun english-set-address-strategy ((poi @poi) (a))
 	(sql-update :table "poi"
               	:columns (list "address")
               	:values (list a)
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "EN"))))
 
 (defun french-name-strategy ((poi @poi))
 	(sql-select :columns (list "name")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "FR"))))
 
 (defun french-set-name-strategy ((poi @poi) (n))
 	(sql-update :table "poi"
            		:columns (list "name")
            		:values (list n)
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "FR"))))
 		
 (defun french-description-strategy ((poi @poi))
 	(sql-select :columns (list "description")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "FR"))))
 
 (defun french-set-description-strategy ((poi @poi) (d))
 	(sql-select :columns (list "description")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "FR"))))
 	
 (defun french-address-strategy ((poi @poi))
 	(sql-select :columns (list "address")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 	                                     	:right (sql-identifier :name "FR"))))
 
 (defun french-set-address-strategy ((poi @poi) (a))
 	(sql-update :table "poi"
               	:columns (list "address")
               	:values (list a)
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "FR"))))
 
 (defun dutch-name-strategy ((poi @poi))
 	(sql-select :columns (list "name")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "NL"))))
 
 (defun dutch-set-name-strategy ((poi @poi) (n))
 	(sql-update :table "poi"
            		:columns (list "name")
            		:values (list n)
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 			                                     	:right (sql-identifier :name "NL"))))
 		
 (defun dutch-description-strategy ((poi @poi))
 	(sql-select :columns (list "description")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "NL"))))
 
 (defun dutch-set-description-strategy ((poi @poi) (d))
 	(sql-update :table "poi"
               	:columns (list "description")
               	:values (list d)
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "NL"))))
 	
 (defun dutch-address-strategy ((poi @poi))
 	(sql-select :columns (list "address")
 	            :tables (list "Poi")
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 	                                     			 :right (sql-identifier :name "NL"))))
 
 (defun dutch-set-address-strategy ((poi @poi) (a))
 	(sql-update :table "poi"
               	:columns (list "address")
               	:values (list a)
-				:where (sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+				:where (sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     :right (sql-identifier :name "NL"))))
 
 (defun kidEnglish-description-strategy ((poi @poi))
@@ -190,7 +190,7 @@
 	            :tables (list "Poi")
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
 														:right (sql-identifier :name "Kid")) 
-							(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+							(sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     	:right (sql-identifier :name "EN")))))
 
 (defun kidEnglish-set-description-strategy ((poi @poi) (d))
@@ -199,7 +199,7 @@
               	:values (list d)
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
 														:right (sql-identifier :name "Kid")) 
-							(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+							(sql-binary-operator :name '= :left (sql-identifier :name "language")
 					                                     :right (sql-identifier :name "EN")))))
 
 (defun kidFrench-description-strategy ((poi @poi))
@@ -207,7 +207,7 @@
 	            :tables (list "Poi")
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
 														:right (sql-identifier :name "Kid")) 
-							(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+							(sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     	:right (sql-identifier :name "FR")))))
 
 (defun kidFrench-set-description-strategy ((poi @poi) (d))
@@ -216,7 +216,7 @@
               	:values (list d)
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
 														:right (sql-identifier :name "Kid")) 
-							(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+							(sql-binary-operator :name '= :left (sql-identifier :name "language")
 					                                     :right (sql-identifier :name "FR")))))
 
 (defun kidDutch-description-strategy ((poi @poi))
@@ -224,7 +224,7 @@
 	            :tables (list "Poi")
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
 														:right (sql-identifier :name "Kid")) 
-							(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+							(sql-binary-operator :name '= :left (sql-identifier :name "language")
 				                                     	:right (sql-identifier :name "NL")))))
 
 (defun kidDutch-set-description-strategy ((poi @poi) (d))
@@ -233,7 +233,7 @@
               	:values (list d)
 				:where (and (sql-binary-operator :name '= :left (sql-identifier :name "type")
 														:right (sql-identifier :name "Kid")) 
-							(sql-binary-operator :name '= :left (sql-identifier :name "langauge")
+							(sql-binary-operator :name '= :left (sql-identifier :name "language")
 					                                     :right (sql-identifier :name "NL")))))
 
 (defun morning-image-strategy ((poi @poi))
